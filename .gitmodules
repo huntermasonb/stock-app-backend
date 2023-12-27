@@ -1,0 +1,3 @@
+[submodule "resources/js/stock-app-frontend"]
+	path = resources/js/stock-app-frontend
+	url = https://github.com/huntermasonb/stock-app.git
