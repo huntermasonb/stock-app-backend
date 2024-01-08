@@ -8,6 +8,7 @@ export default defineConfig({
             input: {
                 app: 'resources/js/app.jsx',
                 stockPrice: 'resources/js/Pages/StockPrice.jsx',
+                laravel: '2resources/js/Pages/Welcome.jsx'
             },
             refresh: true,
         }),
@@ -16,9 +17,13 @@ export default defineConfig({
     server: {
         host: true,
         port: 8080,
+        hmr: {
+            port: 8080,
+            host: 'localhost',
+        }
+
         /*
         Uncomment this section if on windows and hot reload is not working correctly.
-
         watch: {
             usePolling: true
         }

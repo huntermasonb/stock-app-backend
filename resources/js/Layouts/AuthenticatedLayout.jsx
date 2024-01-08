@@ -16,12 +16,12 @@ export default function Authenticated({ user, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="block h-9 w-auto fill-current text-indigo-700" />
                                 </Link>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                <NavLink className="text-indigo-900" href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
                             </div>
@@ -34,7 +34,7 @@ export default function Authenticated({ user, header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-900 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {user.name}
 
@@ -98,14 +98,14 @@ export default function Authenticated({ user, header, children }) {
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
+                        <div className="px-4 text-indigo-900">
+                            <div className="font-medium text-base">{user.name}</div>
+                            <div className="font-medium text-sm">{user.email}</div>
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
+                            <ResponsiveNavLink className="text-indigo-900" href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink className="text-indigo-900" method="post" href={route('logout')} as="button">
                                 Log Out
                             </ResponsiveNavLink>
                         </div>

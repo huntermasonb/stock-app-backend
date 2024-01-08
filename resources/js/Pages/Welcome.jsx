@@ -4,7 +4,7 @@ import StockPrice from "@/Pages/StockPrice.jsx";
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
-            <Head title={"Welcome"} />
+            <Head title="Welcome" />
             <div id={"header"} className="flex flex-row justify-between bg-indigo-900 shadow-md shadow-indigo-700/25">
                 <div className="p-6 text-indigo-100 text-5xl focus:ring-indigo-800">
                     <Link href={route('home')}>Stock App</Link>
