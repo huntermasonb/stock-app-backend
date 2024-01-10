@@ -1,19 +1,23 @@
 import { Link, Head } from '@inertiajs/react';
 import StockPrice from "@/Pages/StockPrice.jsx";
+import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
             <div id={"header"} className="flex flex-row justify-between bg-indigo-900 shadow-md shadow-indigo-700/25">
-                <div className="p-6 text-indigo-100 text-5xl focus:ring-indigo-800">
-                    <Link href={route('home')}>Stock App</Link>
+                <div className="pt-1 pl-6 md:pl-28">
+                    <Link href={route('home')}>
+                        <ApplicationLogo className={"h-20"} />
+                        <p className={"ml-[-1.5rem] text-indigo-100"}>Stock Tracker</p>
+                    </Link>
                 </div>
-                <div className="p-6 mt-3 text-center">
+                <div className="flex p-6 items-center text-center">
                     {auth.user ? (
                         <Link
                             href={route('dashboard')}
-                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            className="font-semibold text-indigo-50 hover:text-indigo-200 dark:text-indigo-200 dark:hover:text-indigo-50 focus:outline focus:outline-2 focus:rounded-sm focus:outline-violet-500"
                         >
                             Dashboard
                         </Link>
@@ -21,14 +25,14 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <>
                             <Link
                                 href={route('login')}
-                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                className="font-semibold text-indigo-50 hover:text-indigo-200 dark:text-indigo-200 dark:hover:text-indigo-50 focus:outline focus:outline-2 focus:rounded-sm focus:outline-violet-500"
                             >
                                 Log in
                             </Link>
 
                             <Link
                                 href={route('register')}
-                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                className="ms-4 font-semibold text-indigo-50 hover:text-indigo-200 dark:text-indigo-200 dark:hover:text-indigo-50 focus:outline focus:outline-2 focus:rounded-sm focus:outline-violet-500"
                             >
                                 Register
                             </Link>
