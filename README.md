@@ -64,3 +64,8 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Custom
+
+After completely setting up the project, its container in Docker, and getting it to run successfully, make sure to install Node dependencies for the front end again using `npm install`.<br>
+To render the React frontend files, you must run `npm run dev` for development purposes.
