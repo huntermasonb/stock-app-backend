@@ -15,6 +15,14 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                lavender: {
+                    100: '#D2D5EF',
+                    200: '#C3C7EA',
+                    300: '#B4B8E4',
+                    400: '#A5AADF'
+                },
+            },
         },
     },
 
