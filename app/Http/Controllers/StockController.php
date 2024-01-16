@@ -3,15 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+use Inertia\Response;
+use App\Models\Stock;
 
 class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Stock $stocks)
     {
         //
+        $stocks = Stock::all();
+        return Inertia::render('Dashboard', [
+            'stocks' => $stocks,
+        ]);
     }
 
     /**
@@ -36,6 +47,7 @@ class StockController extends Controller
     public function show(string $id)
     {
         //
+
     }
 
     /**
