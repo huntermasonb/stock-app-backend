@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Routing\Controller;
+
 use App\Models\Stock;
+use App\Models\User;
+
+
 
 class StockController extends Controller
 {
@@ -18,8 +19,8 @@ class StockController extends Controller
      */
     public function index(Stock $stocks)
     {
-        //
-        $stocks = Stock::all();
+        $user = auth()->user();
+        $stocks = $user->stocks;
         return Inertia::render('Dashboard', [
             'stocks' => $stocks,
         ]);

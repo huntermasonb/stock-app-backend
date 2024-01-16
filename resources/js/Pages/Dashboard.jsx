@@ -19,8 +19,8 @@ export default function Dashboard({ auth, stocks }) {
                                     <div key={stock.id}>
                                         <h2>{stock.name}</h2>
                                     </div>
-                                ))}
-                                {/*<h1>{stock[0].name}</h1>*/}
+                                    )
+                                )}
                             </div>
                     </div>
                 </div>
