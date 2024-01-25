@@ -72,7 +72,7 @@ const StockData = ({ symbol, prices }) => {
                         >
                             More..
                         </button>
-                        {selectedSymbol && <DetailedStockData symbol={selectedSymbol[symbols === "price" ? symbol : symbols]} />}
+                        {selectedSymbol && <DetailedStockData symbol={selectedSymbol[symbols === "price" ? symbol : symbols]} price={parseFloat(prices[symbols].price ? (prices[symbols].price): (prices[symbols])).toFixed(2)} />}
                     </div>
                 </div>
                 ))}

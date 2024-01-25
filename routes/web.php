@@ -37,4 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Route to return API data from my React component
+Route::post('/saveData', [StockController::class, 'store']);
 require __DIR__.'/auth.php';

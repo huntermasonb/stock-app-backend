@@ -1,20 +1,22 @@
 import { useState } from 'react';
-import { Link, Head } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import axios from 'axios';
 
 import StockData from './StockData.jsx';
 
+// MAIN COMPONENT
 const StockPrice = () => {
   const [symbols, setSymbols] = useState('');
   const [sortedSymbols, setSortedSymbols] = useState('');
   const [prices, setPrices] = useState([]);
 
+  // Function to handle changes to the stock search bar
   const handleInputChange = (event) => {
-    const inputSymbols = event.target.value;
+    let inputSymbols = event.target.value;
     setSymbols(inputSymbols);
 
     // Sorting the symbols as the user inputs them since I couldn't figure out how to sort after the data was returned.
-    const sortedSymbols = inputSymbols
+    let sortedSymbols = inputSymbols
     .split(/[,\s]+/)
     .filter((symbol) => symbol.length > 1)
     .map((symbol) => symbol.trim())
@@ -26,6 +28,7 @@ const StockPrice = () => {
     document.getElementById('stockPricesView').style.display="none";
   };
 
+  // Function to trigger the API call and display the fetched data.
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(sortedSymbols);
@@ -71,7 +74,7 @@ const StockPrice = () => {
         console.error(error);
       }
     } else {
-      alert("An error occurred, please try again.")
+      alert("An error occurred getting your stocks, please try again.")
     }
   };
 
@@ -104,6 +107,5 @@ const StockPrice = () => {
           </div>
       </div>
   );
-
 };
 export default StockPrice;
