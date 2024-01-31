@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Head } from "@inertiajs/react";
 import axios from 'axios';
-
 import StockData from './StockData.jsx';
 
 // MAIN COMPONENT
@@ -31,7 +30,7 @@ const StockPrice = () => {
   // Function to trigger the API call and display the fetched data.
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(sortedSymbols);
+    // console.log(sortedSymbols);
 
     fetchData();
     document.getElementById('stockPricesView').style.display="flex";
@@ -55,7 +54,7 @@ const StockPrice = () => {
       };
       try {
         const response = await axios.request(options);
-        console.log(response);
+        // console.log(response);
 
         // Error Handling
         if (response.status !== 200){

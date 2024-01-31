@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import clsx from "clsx";
-import { handleBookmark } from '../Functions.js'
+import { handleBookmark } from '../Functions.js';
 
 const DetailedStockData = React.memo(function DetailedStockData({ symbol, price }) {
     console.log(symbol);
     const [details, setDetails] = useState({});
     const [isVisible, setIsVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
         if (symbol) {
@@ -52,10 +53,15 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
         {"hidden": !isVisible},
     );
     let buttonClasses = clsx(
-        "rounded", "shadow-sm", "hover:shadow-md", "text-indigo-200", "bg-indigo-500",
+        "rounded", "shadow-sm", "hover:shadow-md", "text-indigo-100", "bg-indigo-500",
         "hover:bg-indigo-600", "transition", "duration-250", "ease-in-out", "px-1", "mt-2",
         {"hidden": !isVisible},
     );
+    let errorClasses = clsx(
+        "flex-row", "justify-center", "mt-3", "pt-1", "rounded",
+        "text-red-600", "shadow-sm", "text-xl",
+        {"hidden": !isVisible},
+    )
 
     return (
         <>
@@ -80,10 +86,13 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
         <div className="flex flex-row justify-center">
             <button
                 className={buttonClasses}
-                onClick={() => handleBookmark(price, details)}
+                onClick={() => handleBookmark(price, details, setErrorMessage)}
             >
                 Bookmark this stock for future reference!
             </button>
+        </div>
+        <div className={errorClasses}>
+            {errorMessage}
         </div>
         </>
     );

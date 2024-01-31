@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Routing\Controller;
 
 use App\Models\Stock;
-use App\Models\User;
-
-
 
 class StockController extends Controller
 {
@@ -29,12 +26,11 @@ class StockController extends Controller
     /**
      * Create a new stock from the saved data
      */
-    public function create(Array $data): Stock
+    public function create(Array $data): void
     {
         //Create new stock instance and save the information to the database
         $stock = new Stock($data);
         auth()->user()->stocks()->save($stock);
-        return $stock;
     }
 
     /**
@@ -57,17 +53,17 @@ class StockController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource and initiate creating the entry
      */
-    public function store(Request $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request) : \Illuminate\Http\JsonResponse
     {
         //Store the data from React components for future use.
         $validatedData = $this->validateStockData($request);
-
         $combinedData = $validatedData;
 
-        $stock = $this->create($combinedData);
-        return response()->json(['message'=>'Stock information was passed to Laravel']);
+        //Trigger Create method to save the data to the database
+        $this->create($combinedData);
+        return response()->json(['message'=>'Stock information was saved!']);
     }
 
     /**

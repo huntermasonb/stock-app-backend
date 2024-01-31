@@ -23,10 +23,6 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-//Route::get('/dashboard', function () {
-//    return Inertia::render('Dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::get('/dashboard', [StockController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -38,5 +34,6 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route to return API data from my React component
-Route::post('/saveData', [StockController::class, 'store']);
+Route::post('/saveData', [StockController::class, 'store'])->middleware('auth', 'verified');
+
 require __DIR__.'/auth.php';

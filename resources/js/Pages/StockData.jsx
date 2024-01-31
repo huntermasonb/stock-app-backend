@@ -26,8 +26,7 @@ const StockData = ({ symbol, prices }) => {
     return (
         <>
         {/*
-            Parent Div on StockPrice exists already and class id is 'stockPrices, reason for using an empty JSX parent element'.
-
+            Parent Div on StockPrice exists already and class id is 'stockPrices
             'CARD' FOR DISPLAYING ALL OF THE STOCK INFORMATION
         */}
         <h1 className="mt-6 text-center font-bold text-2xl">
@@ -36,7 +35,7 @@ const StockData = ({ symbol, prices }) => {
         {/* Card Background */}
         <div className="lg:flex lg:flex-col lg:justify-center">
             {rows.map((row, rowIndex) => (
-            <div key={`row-${rowIndex}`} className="grid grid-cols-1 gap-8 mt-8 sm:grid-cols-3">
+            <div key={`row-${rowIndex}`} className="grid grid-cols-1 gap-8 mt-8 lg:grid-cols-3">
                 {row.map((symbols) => (
                 <div
                     key={symbols}
@@ -65,7 +64,7 @@ const StockData = ({ symbol, prices }) => {
                             ${ parseFloat(prices[symbols].price ? (prices[symbols].price): (prices[symbols])).toFixed(2) }
                         </div>
                     </div>
-                    {/* Below is very messy and should be reworked. I have nested ternaries to set classes, could potentialy clean this up by using clsx */}
+                    {/* Below is very messy and should be reworked. I have nested ternaries to set classes, could potentially clean this up by using clsx */}
                     <div className="flex flex-col justify-center ">
                         <button className={`${isButtonHidden(symbols === "price" ? symbol : symbols) ? "hidden" : ""} transition-all duration-150 ease-in-out`}
                                 onClick={() => handleButtonClick(symbols === "price" ? symbol : symbols)}
