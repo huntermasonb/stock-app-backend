@@ -24,7 +24,7 @@ class StockController extends Controller
     }
 
     /**
-     * Create a new stock from the saved data
+     * Create a new stock
      */
     public function create(Array $data): void
     {
@@ -35,8 +35,7 @@ class StockController extends Controller
 
     /**
      * Set parameters for stock entry in the database
-     *
-     **/
+     */
     public function validateStockData(Request $request): array
     {
         return $request->validate([
@@ -53,7 +52,7 @@ class StockController extends Controller
     }
 
     /**
-     * Store a newly created resource and initiate creating the entry
+     * Store a newly created resource and fire the create method to save the entry
      */
     public function store(Request $request) : \Illuminate\Http\JsonResponse
     {
@@ -92,10 +91,16 @@ class StockController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the stock from User's saved stocks.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        //Extract the stock id from the request to be used in delete method
+        $stockID = $request->input('id');
+
+        //Authorize the user is logged in and remove specified stock using data from dashboard.jsx
+        $user = auth()->user();
+        $user->stocks()->where('id',$stockID)->delete();
+        return redirect(route('dashboard'));
     }
 }

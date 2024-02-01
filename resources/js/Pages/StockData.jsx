@@ -27,15 +27,18 @@ const StockData = ({ symbol, prices }) => {
         <>
         {/*
             Parent Div on StockPrice exists already and class id is 'stockPrices
-            'CARD' FOR DISPLAYING ALL OF THE STOCK INFORMATION
+            'CARD' FOR DISPLAYING ALL STOCK INFORMATION
         */}
         <h1 className="mt-6 text-center font-bold text-2xl">
             {symbol.length ? "Stock Prices" : "Enter Symbols to Show Stock Prices. Please Note ETF's detailed information will not work."}
         </h1>
         {/* Card Background */}
         <div className="lg:flex lg:flex-col lg:justify-center">
+            {/* Map number of rows based on the total objects calculate above */}
             {rows.map((row, rowIndex) => (
             <div key={`row-${rowIndex}`} className="grid grid-cols-1 gap-8 mt-8 lg:grid-cols-3">
+
+                {/* Map each symbol to its individual card */}
                 {row.map((symbols) => (
                 <div
                     key={symbols}
@@ -52,7 +55,7 @@ const StockData = ({ symbol, prices }) => {
                                 If price doesn't exist, then there was only one symbol input by the user, changes the way data must be referenced.
                                 Checking length of symbols here doesn't help since the data structure is different when there is one vs multiple symbols submitted to the API.
 
-                                I use this way too much throughout this code and need to figure out a way to correct this somehow or create a function I can call.
+                                I use the above way too much throughout this code and need to figure out a way to correct this somehow or create a function I can call.
                             */}
                         </div>
                     </div>

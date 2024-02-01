@@ -27,6 +27,7 @@ Route::get('/dashboard', [StockController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+//Routes for User Model
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -36,4 +37,8 @@ Route::middleware('auth')->group(function () {
 // Route to return API data from my React component
 Route::post('/saveData', [StockController::class, 'store'])->middleware('auth', 'verified');
 
+//Routes for Stock Model
+Route::middleware('auth')->group(function () {
+    Route::delete('/stock', [StockController::class, 'destroy'])->name('stock.destroy');
+});
 require __DIR__.'/auth.php';

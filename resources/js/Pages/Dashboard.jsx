@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import {Head, Link} from '@inertiajs/react';
 
 export default function Dashboard({ auth, stocks }) {
     return (
@@ -17,7 +17,7 @@ export default function Dashboard({ auth, stocks }) {
                         {/* Stock Information */}
                         <div className="p-2">
                             {stocks.map((stock) => (
-                                <div className="grid grid-cols-9" key={stock.id}>
+                                <div className="grid grid-cols-10" key={stock.id}>
                                     <div id="name">{stock.name}</div>
                                     <div id="symbol">{stock.symbol}</div>
                                     <div id="price">{stock.price}</div>
@@ -28,6 +28,7 @@ export default function Dashboard({ auth, stocks }) {
                                     <div id="dividend_yield">{stock.dividend_yield}</div>
                                     <div id="dividend_date">{stock.dividend_date}</div>
                                     <div id="dividend_per_share">{stock.dividend_per_share}</div>
+                                    <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })} className="text-lavender-200 bg-red-600">Delete</Link>
                                 </div>
                             ))}
                         </div>
