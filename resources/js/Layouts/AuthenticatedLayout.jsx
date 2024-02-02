@@ -21,7 +21,7 @@ export default function Authenticated({ user, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink className="text-indigo-100 text-xl" href={route('dashboard')} active={route().current('dashboard')}>
+                                <NavLink className="text-indigo-100 hover:text-indigo-300 focus:text-indigo-200 text-xl" href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
                             </div>
@@ -63,11 +63,11 @@ export default function Authenticated({ user, header, children }) {
                                 </Dropdown>
                             </div>
                         </div>
-
+                        {/* This is the mobile menu SVG icon */}
                         <div className="-me-2 flex items-center sm:hidden">
                             <button
                                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                                className="inline-flex items-center justify-center p-2 rounded-md text-lavender-200 hover:text-gray-500 hover:bg-indigo-100 focus:outline-none focus:bg-lavendar-100 focus:text-lavender-300 transition duration-150 ease-in-out"
                             >
                                 <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -98,14 +98,14 @@ export default function Authenticated({ user, header, children }) {
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4 text-indigo-900">
+                        <div className="px-4 text-indigo-50">
                             <div className="font-medium text-base">{user.name}</div>
                             <div className="font-medium text-sm">{user.email}</div>
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink className="text-indigo-900" href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink className="text-indigo-900" method="post" href={route('logout')} as="button">
+                            <ResponsiveNavLink className="text-indigo-50" href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink className="text-indigo-50" method="post" href={route('logout')} as="button">
                                 Log Out
                             </ResponsiveNavLink>
                         </div>

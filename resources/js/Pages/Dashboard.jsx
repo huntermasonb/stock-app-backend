@@ -5,7 +5,7 @@ export default function Dashboard({ auth, stocks }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            // header={<h2 className="font-semibold text-center text-2xl text-indigo-900 leading-tight">Dashboard</h2>}
+            // header={<h2 className="font-semibold text-center text-2xl text-indigo-900 leading-tight">Welcome to your Dashboard</h2>}
         >
             <Head title="Dashboard" />
 
@@ -28,7 +28,7 @@ export default function Dashboard({ auth, stocks }) {
                                     <div id="dividend_yield">{stock.dividend_yield}</div>
                                     <div id="dividend_date">{stock.dividend_date}</div>
                                     <div id="dividend_per_share">{stock.dividend_per_share}</div>
-                                    <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })} className="text-lavender-200 bg-red-600">Delete</Link>
+                                    <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })} className="text-lavender-200 bg-red-600 rounded-md">Delete</Link>
                                 </div>
                             ))}
                         </div>

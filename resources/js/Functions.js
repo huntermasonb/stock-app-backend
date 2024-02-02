@@ -34,7 +34,7 @@ export const handleBookmark = async (price, details, setErrorMessage) => {
 
         //200 response means the request was successful
         if (response.status === 200) {
-            window.location.href="/dashboard";
+            //REdirect goes here
         }
     } catch (error) {
         console.error('Error bookmarking stock:', error);
