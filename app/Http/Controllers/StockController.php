@@ -28,9 +28,9 @@ class StockController extends Controller
      */
     public function create(Array $data): void
     {
-        //Create new stock instance and save the information to the database
-        $stock = new Stock($data);
-        auth()->user()->stocks()->save($stock);
+            //Create new stock instance and save the information to the database
+            $stock = new Stock($data);
+            auth()->user()->stocks()->save($stock);
     }
 
     /**
@@ -60,9 +60,17 @@ class StockController extends Controller
         $validatedData = $this->validateStockData($request);
         $combinedData = $validatedData;
 
-        //Trigger Create method to save the data to the database
-        $this->create($combinedData);
-        return response()->json(['message'=>'Stock information was saved!']);
+        //Check to see if the stock exists already and trigger the Update method if it does
+        $stock = auth()->user()->stocks()->where('name', $combinedData['name']);
+        if ($stock){
+            $stock->update($combinedData);
+            return response()->json(['message'=>'Stock information was updated!']);
+        }
+        //Trigger Create method if stock doesn't exist yet to save data to the database
+        else{
+            $this->create($combinedData);
+            return response()->json(['message'=>'Stock information was saved!']);
+        }
     }
 
     /**
@@ -83,11 +91,13 @@ class StockController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update already bookmarked stock in the database
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request) : Void
     {
-        //
+        $stock = $request;
+        //Authorize the user is signed in and update the existing entry in the database
+        auth()->user()->stocks()->where('name',$stock['name'])->update();
     }
 
     /**
@@ -101,6 +111,6 @@ class StockController extends Controller
         //Authorize the user is logged in and remove specified stock using data from dashboard.jsx
         $user = auth()->user();
         $user->stocks()->where('id',$stockID)->delete();
-        return redirect(route('dashboard'));
+//        return redirect(route('dashboard'));
     }
 }
