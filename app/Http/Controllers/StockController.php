@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
-
 use App\Models\Stock;
 
 class StockController extends Controller
@@ -14,10 +13,9 @@ class StockController extends Controller
     /**
      * Display all stocks saved by the user
      */
-    public function index(Stock $stocks): Response
+    public function index(): Response
     {
-        $user = auth()->user();
-        $stocks = $user->stocks;
+        $stocks = auth()->user()->stocks;
         return Inertia::render('Dashboard', [
             'stocks' => $stocks,
         ]);
@@ -45,7 +43,7 @@ class StockController extends Controller
             'beta' => 'required|numeric',
             'EPS' => 'required|numeric',
             'price_to_earnings' => 'required|numeric',
-            'dividend_yield' => 'nullable|numeric',
+            'dividend_yield' => 'nullable|string',
             'dividend_date' => 'nullable|string',
             'dividend_per_share' => 'nullable|string'
         ]);
@@ -60,13 +58,14 @@ class StockController extends Controller
         $validatedData = $this->validateStockData($request);
         $combinedData = $validatedData;
 
-        //Check to see if the stock exists already and trigger the Update method if it does
-        $stock = auth()->user()->stocks()->where('name', $combinedData['name']);
-        if ($stock){
+        //Check to see if the stock exists and trigger the Update method if so
+        $stock = auth()->user()->stocks()->where('name', $combinedData['name'])->first();
+        if ($stock && $stock->exists()){
             $stock->update($combinedData);
             return response()->json(['message'=>'Stock information was updated!']);
         }
-        //Trigger Create method if stock doesn't exist yet to save data to the database
+
+        //Trigger Create method if stock doesn't exist to save data to the database
         else{
             $this->create($combinedData);
             return response()->json(['message'=>'Stock information was saved!']);
@@ -95,7 +94,7 @@ class StockController extends Controller
      */
     public function update(Request $request) : Void
     {
-        $stock = $request;
+        $stock = $this->validateStockData($request);
         //Authorize the user is signed in and update the existing entry in the database
         auth()->user()->stocks()->where('name',$stock['name'])->update();
     }
@@ -111,6 +110,5 @@ class StockController extends Controller
         //Authorize the user is logged in and remove specified stock using data from dashboard.jsx
         $user = auth()->user();
         $user->stocks()->where('id',$stockID)->delete();
-//        return redirect(route('dashboard'));
     }
 }

@@ -41,7 +41,7 @@ export default function Dashboard({ auth, stocks }) {
                                     <div className="font-semibold lg:hidden">Dividends/Yield:</div><div id="dividend_yield">{stock.dividend_yield}</div>
                                     <div className="font-semibold lg:hidden">Dividend Date:</div><div id="dividend_date">{stock.dividend_date}</div>
                                     <div className="font-semibold lg:hidden">Dividends/Share:</div><div id="dividend_per_share">{stock.dividend_per_share}</div>
-                                    <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })} className="text-indigo-50 bg-red-400 rounded-md px-1 mt-2 max-h-6 col-span-2 lg:col-start-4 lg:col-span-3">Delete</Link>
+                                    <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })} className="text-indigo-50 bg-red-400 rounded-md hover:shadow-md px-1 mt-2 max-h-6 col-span-2 lg:col-start-4 lg:col-span-3 transition duration-200">Delete</Link>
                                 </div>
                             ))}
                         </div>

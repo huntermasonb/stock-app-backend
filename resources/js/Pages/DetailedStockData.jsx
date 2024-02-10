@@ -5,9 +5,12 @@ import { handleBookmark } from '../Functions.js';
 
 const DetailedStockData = React.memo(function DetailedStockData({ symbol, price }) {
     console.log(symbol);
+    //Variables needed to manage state
     const [details, setDetails] = useState({});
     const [isVisible, setIsVisible] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null)
+    const [isMessageVisible, setIsMessageVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null)
 
     useEffect(() => {
         if (symbol) {
@@ -45,8 +48,6 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
         }
     }, [symbol]);
 
-    console.log(price);
-
     let stockClasses = clsx(
         "flex-col",
         "w-1/2",
@@ -57,11 +58,17 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
         "hover:bg-indigo-600", "transition", "duration-250", "ease-in-out", "px-1", "mt-2",
         {"hidden": !isVisible},
     );
+    //Response Message classes
     let errorClasses = clsx(
-        "flex-row", "justify-center", "mt-3", "pt-1", "rounded",
-        "text-red-600", "shadow-sm", "text-xl",
-        {"hidden": !isVisible},
-    )
+        "flex-row", "justify-center", "mt-3",
+        "pt-1", "text-red-600", "text-xl",
+        {"hidden": !isMessageVisible || !errorMessage},
+    );
+    let successClasses = clsx(
+        "flex-row", "justify-center", "mt-3",
+        "pt-1" ,"text-green-600", "text-xl",
+        {"hidden": !isMessageVisible || !successMessage},
+    );
 
     return (
         <>
@@ -86,13 +93,16 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
         <div className="flex flex-row justify-center">
             <button
                 className={buttonClasses}
-                onClick={() => handleBookmark(price, details, setErrorMessage)}
+                onClick={() => handleBookmark(price, details, setErrorMessage, setSuccessMessage, setIsMessageVisible)}
             >
                 Bookmark this stock for future reference!
             </button>
         </div>
         <div className={errorClasses}>
             {errorMessage}
+        </div>
+        <div className={successClasses}>
+            {successMessage}
         </div>
         </>
     );
