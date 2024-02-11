@@ -31,7 +31,6 @@ const StockPrice = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // console.log(sortedSymbols);
-
     fetchData();
     document.getElementById('stockPricesView').style.display="flex";
   };
@@ -55,7 +54,6 @@ const StockPrice = () => {
       try {
         const response = await axios.request(options);
         // console.log(response);
-
         // Error Handling
         if (response.status !== 200){
           alert("Error: Please make sure you entered valid stock symbols.")

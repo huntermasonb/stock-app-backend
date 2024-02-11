@@ -14,7 +14,8 @@ export default function Dashboard({ auth, stocks }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-md transition-shadow duration-200">
                         {/* Dashboard Header */}
                         <div className="py-4 text-center text-2xl font-semibold text-indigo-900">Welcome to your dashboard!</div>
-                        {/* Stock Labels */}
+                        {/*Below display should probably be re-done*/}
+                        {/* Stock Labels for large screen size */}
                         <div className="p-2">
                             <div className="hidden mx-2 lg:grid lg:grid-cols-9 justify-items-center font-semibold">
                                 <div className="justify-self-start">Name</div>
@@ -27,8 +28,7 @@ export default function Dashboard({ auth, stocks }) {
                                 <div>Dividend Date</div>
                                 <div>Dividend/Share</div>
                             </div>
-                            {/* Stock Information */}
-                            {/*Below display should probably be re-done*/}
+                            {/* Stock Data & labels are not present on desktop screens. */}
                             {stocks.map((stock) => (
                                 <div className="grid grid-cols-2 lg:grid-cols-9 justify-items-center align-baseline bg-indigo-200 p-2 my-2" key={stock.id}>
                                     <div className="font-semibold lg:hidden">Name:</div><div id="name" className="lg:justify-self-start lg:font-bold">{stock.name}</div>
@@ -41,7 +41,11 @@ export default function Dashboard({ auth, stocks }) {
                                     <div className="font-semibold lg:hidden">Dividends/Yield:</div><div id="dividend_yield">{stock.dividend_yield}</div>
                                     <div className="font-semibold lg:hidden">Dividend Date:</div><div id="dividend_date">{stock.dividend_date}</div>
                                     <div className="font-semibold lg:hidden">Dividends/Share:</div><div id="dividend_per_share">{stock.dividend_per_share}</div>
-                                    <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })} className="text-indigo-50 bg-red-400 rounded-md hover:shadow-md px-1 mt-2 max-h-6 col-span-2 lg:col-start-4 lg:col-span-3 transition duration-200">Delete</Link>
+                                    <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })}
+                                          className="text-indigo-50 bg-red-400 rounded-md hover:shadow-md px-1 mt-2 max-h-6 col-span-2 lg:col-start-4 lg:col-span-3 transition duration-200"
+                                    >
+                                        Delete
+                                    </Link>
                                 </div>
                             ))}
                         </div>

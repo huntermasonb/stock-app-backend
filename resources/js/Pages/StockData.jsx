@@ -1,6 +1,7 @@
-import { useState } from "react";
-import DetailedStockData from "./DetailedStockData.jsx";
+import {Suspense, lazy, useState} from "react";
+import Loading from "/resources/js/Components/Loading.jsx";
 
+const DetailedStockData = lazy(() => delayForDemo(import('./DetailedStockData.jsx')));
 const StockData = ({ symbol, prices }) => {
     const [selectedSymbol, setSelectedSymbol] = useState({});
 
@@ -43,9 +44,11 @@ const StockData = ({ symbol, prices }) => {
                 <div
                     key={symbols}
                     id={symbols === "price" ? symbol : symbols}
+                    //Calculation to determine if the row is even or odd and assign a color to the entire row based on that
                     className={`${
                         rowIndex % 2 === 0 ? "bg-indigo-200" : "bg-indigo-300"
-                        } p-4 shadow space-y-2 duration-200 transition-all rounded-sm hover:shadow-lg`}
+                        } p-4 shadow space-y-2 duration-200 transition-all rounded-sm hover:shadow-lg`
+                    }
                 >
                     {/* Symbol Column */}
                     <div className="flex justify-center" id="symbol">
@@ -74,7 +77,14 @@ const StockData = ({ symbol, prices }) => {
                         >
                             More..
                         </button>
-                        {selectedSymbol && <DetailedStockData symbol={selectedSymbol[symbols === "price" ? symbol : symbols]} price={parseFloat(prices[symbols].price ? (prices[symbols].price): (prices[symbols])).toFixed(2)} />}
+                        {selectedSymbol && selectedSymbol[symbols === "price" ? symbol : symbols] && (
+                            <Suspense fallback={<Loading />}>
+                                <DetailedStockData symbol={selectedSymbol[symbols === "price" ? symbol : symbols]}
+                                                   price={parseFloat(prices[symbols].price ? (prices[symbols].price) : (prices[symbols])).toFixed(2)}
+                                                   key={selectedSymbol.symbol}
+                                />
+                            </Suspense>
+                        )}
                     </div>
                 </div>
                 ))}
@@ -85,7 +95,10 @@ const StockData = ({ symbol, prices }) => {
         </>
     );
 };
-
-
+function delayForDemo(promise) {
+    return new Promise(resolve => {
+        setTimeout(resolve, 2000);
+    }).then(() => promise);
+}
 
 export default StockData;
