@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import clsx from "clsx";
 import { handleBookmark } from '../Functions.js';
+import Loading from "@/Components/Loading.jsx";
 
 const DetailedStockData = React.memo(function DetailedStockData({ symbol, price }) {
     console.log(symbol);
@@ -9,12 +10,17 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
     const [details, setDetails] = useState({});
     const [isVisible, setIsVisible] = useState(false);
     const [isMessageVisible, setIsMessageVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    //Message variables for letting the user know if their stock was saved
     const [errorMessage, setErrorMessage] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null)
+    const [successMessage, setSuccessMessage] = useState(null);
+
 
     useEffect(() => {
         if (symbol) {
             setIsVisible(false);
+            setErrorMessage(null);setSuccessMessage(null);
+            setIsLoading(true);
             setDetails({});
             const fetchData = async () => {
                 const options = {
@@ -31,26 +37,28 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
                         'X-RapidAPI-Host': 'alpha-vantage.p.rapidapi.com'
                     }
                 };
-
                 try {
                     const response = await axios.request(options);
                     console.log(response.data);
                     setDetails(response.data);
+                    setIsLoading(false);
                     setIsVisible(true);
                 } catch (error) {
                     console.error(error);
+                    if (error.response.status === 429){
+                        setErrorMessage("Error: We have temporarily run out of API tokens, please try again in 1 minute.");
+                    }
                     setIsVisible(false);
+                    setIsMessageVisible(true);
                     return(error);
                 }
             };
-
             fetchData();
         }
     }, [symbol]);
 
     let stockClasses = clsx(
-        "flex-col",
-        "w-1/2",
+        "flex-col", "w-1/2",
         {"hidden": !isVisible},
     );
     let buttonClasses = clsx(
@@ -72,6 +80,9 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
 
     return (
         <>
+        {isLoading && !errorMessage &&(
+           <Loading />
+        )}
         <div className="flex flex-row">
             <div className={stockClasses} id="detailedLabels">
                 <div>EPS:</div>

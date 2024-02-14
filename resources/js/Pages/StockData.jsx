@@ -1,22 +1,20 @@
-import {Suspense, lazy, useState} from "react";
-import Loading from "/resources/js/Components/Loading.jsx";
+import React, { useState } from "react";
+import DetailedStockData from "@/Pages/DetailedStockData.jsx";
 
-const DetailedStockData = lazy(() => delayForDemo(import('./DetailedStockData.jsx')));
 const StockData = ({ symbol, prices }) => {
     const [selectedSymbol, setSelectedSymbol] = useState({});
 
     //On Click function for the button to fire detailedStockData
     const handleButtonClick = (symbol) => {
+        //Messy way to handle the state of which symbol was clicked. Checks to see if the symbol exists in SelectedSymbols, adds it to the array if it doesn't.
+        // Should probably re-work this in the future.
         setSelectedSymbol((prevSelectedSymbols) => {
-            //Messy way to handle the state of which symbol was clicked. Checks to see if the symbol exists in prevSelectedSymbols, adds it to the array if it doesn't.
-            // Should probably re-work this in the future.
             return { ...prevSelectedSymbols, [symbol]: symbol };
         });
     };
-
     const isButtonHidden = (symbol) => {
         return !!selectedSymbol[symbol]
-    }
+    };
 
     // Create an array of arrays, each containing 'itemsPerRow' items and calculate the amount of rows needed based on the number of total symbols
     const itemsPerRow = 3 ;
@@ -50,16 +48,17 @@ const StockData = ({ symbol, prices }) => {
                         } p-4 shadow space-y-2 duration-200 transition-all rounded-sm hover:shadow-lg`
                     }
                 >
+
                     {/* Symbol Column */}
                     <div className="flex justify-center" id="symbol">
                         <div className="uppercase font-medium">
-                            {symbols === "price" ? symbol : symbols}
                             {/*
                                 If price doesn't exist, then there was only one symbol input by the user, changes the way data must be referenced.
                                 Checking length of symbols here doesn't help since the data structure is different when there is one vs multiple symbols submitted to the API.
 
-                                I use the above way too much throughout this code and need to figure out a way to correct this somehow or create a function I can call.
+                                I use the below way too much throughout this code and need to figure out a way to correct this somehow or create a function I can call.
                             */}
+                            {symbols === "price" ? symbol : symbols}
                         </div>
                     </div>
 
@@ -71,19 +70,17 @@ const StockData = ({ symbol, prices }) => {
                         </div>
                     </div>
                     {/* Below is very messy and should be reworked. I have nested ternaries to set classes, could potentially clean this up by using clsx */}
-                    <div className="flex flex-col justify-center ">
+                    <div className="flex flex-col justify-center">
                         <button className={`${isButtonHidden(symbols === "price" ? symbol : symbols) ? "hidden" : ""} transition-all duration-150 ease-in-out`}
                                 onClick={() => handleButtonClick(symbols === "price" ? symbol : symbols)}
                         >
                             More..
                         </button>
+                        {/* Use the messy ternary to check if symbol exists and pass that data as the key so the suspense trigger functions correctly for  both */}
                         {selectedSymbol && selectedSymbol[symbols === "price" ? symbol : symbols] && (
-                            <Suspense fallback={<Loading />}>
-                                <DetailedStockData symbol={selectedSymbol[symbols === "price" ? symbol : symbols]}
-                                                   price={parseFloat(prices[symbols].price ? (prices[symbols].price) : (prices[symbols])).toFixed(2)}
-                                                   key={selectedSymbol.symbol}
-                                />
-                            </Suspense>
+                            <DetailedStockData symbol={selectedSymbol[symbols === "price" ? symbol : symbols]}
+                                               price={parseFloat(prices[symbols].price ? (prices[symbols].price) : (prices[symbols])).toFixed(2)}
+                            />
                         )}
                     </div>
                 </div>
@@ -95,10 +92,4 @@ const StockData = ({ symbol, prices }) => {
         </>
     );
 };
-function delayForDemo(promise) {
-    return new Promise(resolve => {
-        setTimeout(resolve, 2000);
-    }).then(() => promise);
-}
-
 export default StockData;

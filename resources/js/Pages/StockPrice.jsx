@@ -55,17 +55,20 @@ const StockPrice = () => {
         const response = await axios.request(options);
         // console.log(response);
         // Error Handling
-        if (response.status !== 200){
-          alert("Error: Please make sure you entered valid stock symbols.")
-        } else if (response.status === 429 ){
-          alert("Error: We have run out of API tokens temporarily, please try again later.")
-        } else if (response.status === 400){
-          alert("Error: There weren't any symbols submitted, please try")
+        switch (response.status) {
+            case 200:
+                setPrices(response.data);
+                break;
+            case 429:
+                alert("Error: We have run out of API tokens temporarily, please try again in 1 minute.");
+                break;
+            case 400:
+                alert("Error: There weren't any symbols submitted, please try again.");
+                break;
+            default:
+                alert("Error: An unknown error occurred, please try again. Sorry!");
         }
         // End Error Handling
-        else {
-          setPrices(response.data);
-        }
       }
       catch (error) {
         console.error(error);
