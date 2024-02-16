@@ -16,7 +16,7 @@ const combineAPIData = (price, details) => {
         dividend_date: stockDetails.DividendDate,
         dividend_per_share: stockDetails.DividendPerShare,
     };
-}
+};
 
 //CALL THE FUNCTION TO COMBINE API DATA AND BEGIN THE PROCESS OF STORING IT IN THE DATABASE
 export const handleBookmark = async (price, details, setErrorMessage, setSuccessMessage, setIsMessageVisible) => {
@@ -52,4 +52,15 @@ export const handleBookmark = async (price, details, setErrorMessage, setSuccess
             setIsMessageVisible(true);
         }
     }
+};
+
+//FUNCTION TO ASSIST WITH CUSTOM MOUSE ENTER FUNCTIONALITY IN REACT
+export const handleMouseEnter = (setIsHovering) => {
+    //change state variable to true
+    setIsHovering(true);
+};
+//FUNCTION TO ASSIST WITH CUSTOM MOUSE LEAVE FUNCTIONALITY IN REACT
+export const handleMouseLeave = (setIsHovering) => {
+    //change state variable to false
+    setIsHovering(false);
 };

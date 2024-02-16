@@ -77,11 +77,12 @@ const StockPrice = () => {
       alert("An error occurred getting your stocks, please try again.")
     }
   };
-
   // Search Bar
   return (
       <div className="p-16 w-full">
-          <Head title={"Home"} />
+          <Head title={"Home"}>
+              <meta name="description" content="Stock market application for searching, tracking, saving, and monitoring stock data." />
+          </Head>
           <div className='flex flex-col w-full'>
               <form onSubmit={handleSubmit} className="flex gap-4 text-center w-full">
                   <input
