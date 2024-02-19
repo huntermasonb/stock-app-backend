@@ -50,7 +50,7 @@ class StockController extends Controller
     }
 
     /**
-     * Store a newly created resource and fire the create method to save the entry
+     * Store a newly created stock and fire the create method to save the entry
      */
     public function store(Request $request) : \Illuminate\Http\JsonResponse
     {

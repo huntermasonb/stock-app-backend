@@ -20,7 +20,8 @@ export default function Dashboard({ auth, stocks }) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-md transition-shadow duration-200">
                         {/* Dashboard Header */}
                         <div className="py-4 text-center text-2xl font-semibold text-indigo-900">Welcome to your dashboard!</div>
-                        {/*Below display should probably be re-done*/}
+
+                        {/*Below display is very messy and can be done pretty easily to reduce redundancy*/}
                         {/* Stock Labels for large screen size */}
                         <div className="p-2">
                             <div className="hidden mx-2 lg:grid lg:grid-cols-10 justify-items-center font-semibold" id="LargeScreenLabels" >
@@ -34,10 +35,8 @@ export default function Dashboard({ auth, stocks }) {
                                 <div>Dividend Date</div>
                                 <div>Dividends Per Share</div>
                             </div>
-                            {/*
-                                Stock Data & labels are not present on desktop screens.
-                                This is very messy and can be done pretty easily to reduce redundancy
-                            */}
+
+                            {/*Stock labels below are not present on desktop screens.*/}
                             {stocks.map((stock) => (
                                 <div className="grid grid-cols-2 lg:grid-cols-10 justify-items-center bg-indigo-50 p-2 my-2" key={stock.id}>
                                     <div className="font-semibold lg:hidden">Name:</div><div id="name" className="lg:justify-self-start lg:font-bold m-auto">{stock.name}</div>
@@ -52,7 +51,7 @@ export default function Dashboard({ auth, stocks }) {
                                     <div className="font-semibold lg:hidden">Dividends/Share:</div><div id="dividend_per_share" className="m-auto">{stock.dividend_per_share}</div>
                                     <div className="mt-1 col-span-2 lg:col-span-1 " onMouseEnter={() => handleMouseEnter(setIsHovering)} onMouseLeave={() => handleMouseLeave(setIsHovering)}>
                                         <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })}
-                                               className="text-indigo-100 bg-red-600 rounded-md hover:shadow-md px-1 max-h-10 transition duration-200"
+                                               className="text-indigo-100 bg-red-600 rounded-md shadow-sm hover:shadow-md px-1 max-h-10 transition duration-200"
                                         >
                                             {isHovering ? <DeleteOpenIcon /> : <DeleteClosedIcon /> }
                                         </Link>

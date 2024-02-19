@@ -8,7 +8,7 @@ export default defineConfig({
             input: {
                 app: 'resources/js/app.jsx',
                 stockPrice: 'resources/js/Pages/StockPrice.jsx',
-                laravel: '2resources/js/Pages/Welcome.jsx'
+                laravel: 'resources/js/Pages/Welcome.jsx'
             },
             refresh: true,
         }),
