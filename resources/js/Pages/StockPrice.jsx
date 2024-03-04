@@ -79,24 +79,26 @@ const StockPrice = () => {
   };
   // Search Bar
   return (
-      <div className="p-16 w-full">
+      <div className="py-16 px-10 w-full">
           <Head title={"Home"}>
               <meta name="description" content="Stock market application for searching, tracking, saving, and monitoring stock data." />
           </Head>
           <div className='flex flex-col w-full'>
-              <form onSubmit={handleSubmit} className="flex gap-4 text-center w-full">
+              <form onSubmit={handleSubmit} className="flex gap-4 text-center w-full hover">
                   <input
                       type="text"
                       id="stockSymbols"
                       value={symbols}
-                      className="border border-slate-400 px-3 py-2 rounded-lg w-full focus:ring-2 focus:ring-slate-400 focus:border-slate-500 focus:outline-none"
+                      className="border border-slate-400 hover px-3 py-2 rounded-lg w-full focus:ring-2 focus:ring-slate-400 focus:border-slate-500 focus:outline-none"
                       onChange={handleInputChange}
                       placeholder="AMZN, AAPL..."
                       required
+                      aria-label="Stock input section"
                   />
                   <button
                       type="submit"
-                      className="w-1/3 max-w-[250px] px-1 font-semibold rounded shadow-sm transition-colors duration-150 ease-in-out bg-indigo-500 text-indigo-100 hover:bg-indigo-600"
+                      className="w-1/3 min-w-14 max-w-[250px] px-1 font-semibold rounded shadow-sm transition-colors duration-150 ease-in-out bg-indigo-500 text-indigo-100 hover:bg-indigo-600"
+                      aria-label="Search Button"
                   >
                     Search
                   </button>

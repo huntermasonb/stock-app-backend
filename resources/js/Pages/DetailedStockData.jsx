@@ -58,23 +58,20 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
     }, [symbol]);
 
     let stockClasses = clsx(
-        "flex-col", "w-1/2",
+        "flex", "flex-col", "w-1/2",
         {"hidden": !isVisible},
     );
     let buttonClasses = clsx(
-        "rounded", "shadow-sm", "hover:shadow-md", "text-indigo-100", "bg-indigo-500",
-        "hover:bg-indigo-600", "transition", "duration-250", "ease-in-out", "px-1", "mt-2",
+        "rounded", "shadow-sm", "hover:shadow-md", "text-indigo-100", "bg-indigo-500", "hover:bg-indigo-600", "transition", "duration-250", "ease-in-out", "px-1", "mt-2",
         {"hidden": !isVisible},
     );
     //Response Message classes
     let errorClasses = clsx(
-        "flex-row", "justify-center", "mt-3",
-        "pt-1", "text-red-600", "text-xl",
+       "flex", "flex-row", "justify-center", "mt-3", "pt-1", "text-red-600", "text-xl",
         {"hidden": !isMessageVisible || !errorMessage},
     );
     let successClasses = clsx(
-        "flex-row", "justify-center", "mt-3",
-        "pt-1" ,"text-green-600", "text-xl",
+        "flex", "flex-row", "justify-center", "mt-3", "pt-1" ,"text-green-600", "text-xl",
         {"hidden": !isMessageVisible || !successMessage},
     );
 
@@ -87,10 +84,10 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
             <div className={stockClasses} id="detailedLabels">
                 <div>EPS:</div>
                 <div>Beta:</div>
-                <div>Price to Earnings Ratio:</div>
+                <div>P/E:</div>
                 <div>Dividend Yield:</div>
                 <div>Dividend Date:</div>
-                <div>Dividends Per Share:</div>
+                <div>Dividends / Share:</div>
             </div>
             <div className={stockClasses}>
                 <div>{details.EPS}</div>

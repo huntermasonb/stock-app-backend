@@ -3,10 +3,9 @@ import {Head, Link} from '@inertiajs/react';
 import {useState} from "react";
 import DeleteClosedIcon from "@/Components/DeleteClosedIcon.jsx";
 import DeleteOpenIcon from "@/Components/DeleteOpenIcon.jsx";
-import {handleMouseEnter, handleMouseLeave} from "@/Functions.js";
 
 export default function Dashboard({ auth, stocks }) {
-    const [isHovering, setIsHovering] = useState(false);
+    const [isHovering, setIsHovering] = useState(null);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -17,7 +16,7 @@ export default function Dashboard({ auth, stocks }) {
             </Head>
             <div className="py-9">
                 <div className="flex flex-col w-full sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-md transition-shadow duration-200">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg hover:shadow-md dark:shadow-gray-200 dark:hover:shadow-gray-200 transition-shadow duration-200">
                         {/* Dashboard Header */}
                         <div className="py-4 text-center text-2xl font-semibold text-indigo-900">Welcome to your dashboard!</div>
 
@@ -38,7 +37,7 @@ export default function Dashboard({ auth, stocks }) {
 
                             {/*Stock labels below are not present on desktop screens.*/}
                             {stocks.map((stock) => (
-                                <div className="grid grid-cols-2 lg:grid-cols-10 justify-items-center bg-indigo-50 p-2 my-2" key={stock.id}>
+                                <div className="grid grid-cols-2 lg:grid-cols-10 justify-items-center bg-indigo-50 p-2 my-2 rounded" key={stock.id}>
                                     <div className="font-semibold lg:hidden">Name:</div><div id="name" className="lg:justify-self-start lg:font-bold m-auto">{stock.name}</div>
                                     <div className="font-semibold lg:hidden">Symbol:</div><div id="symbol" className="m-auto">{stock.symbol}</div>
                                     <div className="font-semibold lg:hidden">Price:</div><div id="price" className="m-auto">{stock.price}</div>
@@ -49,11 +48,11 @@ export default function Dashboard({ auth, stocks }) {
                                     <div className="font-semibold lg:hidden">Dividends/Yield:</div><div id="dividend_yield" className="m-auto">{stock.dividend_yield}</div>
                                     <div className="font-semibold lg:hidden">Dividend Date:</div><div id="dividend_date" className="m-auto">{stock.dividend_date}</div>
                                     <div className="font-semibold lg:hidden">Dividends/Share:</div><div id="dividend_per_share" className="m-auto">{stock.dividend_per_share}</div>
-                                    <div className="mt-1 col-span-2 lg:col-span-1 " onMouseEnter={() => handleMouseEnter(setIsHovering)} onMouseLeave={() => handleMouseLeave(setIsHovering)}>
+                                    <div className="mt-1 col-span-2 lg:col-span-1 " onMouseEnter={() => setIsHovering(stock.id)} onMouseLeave={() =>setIsHovering(null)}>
                                         <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })}
-                                               className="text-indigo-100 bg-red-600 rounded-md shadow-sm hover:shadow-md px-1 max-h-10 transition duration-200"
+                                               className="text-indigo-100 bg-red-700 rounded-md shadow-sm hover:shadow-md ring-red-700 hover:ring-1 focus:ring-2 focus:ring-offset-1 focus:ring-red-900 px-1 max-h-10 transition duration-200"
                                         >
-                                            {isHovering ? <DeleteOpenIcon /> : <DeleteClosedIcon /> }
+                                            {isHovering === stock.id ? <DeleteOpenIcon /> : <DeleteClosedIcon /> }
                                         </Link>
                                     </div>
                                 </div>

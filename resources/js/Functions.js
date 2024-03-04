@@ -28,9 +28,8 @@ export const handleBookmark = async (price, details, setErrorMessage, setSuccess
     //Call the function to combine the data together
     const combinedData = combineAPIData(Price, Details);
 
-    //Send combinedData to laravel via axios request and a route created in /routes/api.php.
+    //Send combinedData to laravel via axios request and a route created in /routes/web.php.
     try {
-        //Make axios post request to send data to the /saveData route
         const response = await axios.post('/saveData', combinedData);
 
         //200 response means the request was successful
@@ -52,15 +51,4 @@ export const handleBookmark = async (price, details, setErrorMessage, setSuccess
             setIsMessageVisible(true);
         }
     }
-};
-
-//FUNCTION TO ASSIST WITH CUSTOM MOUSE ENTER FUNCTIONALITY IN REACT
-export const handleMouseEnter = (setIsHovering) => {
-    //change state variable to true
-    setIsHovering(true);
-};
-//FUNCTION TO ASSIST WITH CUSTOM MOUSE LEAVE FUNCTIONALITY IN REACT
-export const handleMouseLeave = (setIsHovering) => {
-    //change state variable to false
-    setIsHovering(false);
 };

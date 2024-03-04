@@ -28,11 +28,11 @@ const StockData = ({ symbol, prices }) => {
             Parent Div on StockPrice exists already and class id is 'stockPrices
             'CARD' FOR DISPLAYING ALL STOCK INFORMATION
         */}
-        <h1 className="mt-6 text-center font-bold text-2xl">
+        <h1 className="mt-6 text-center font-bold text-2xl dark:text-indigo-50">
             {symbol.length ? "Stock Prices" : "Enter Symbols to Show Stock Prices. Please Note ETF's detailed information will not work."}
         </h1>
         {/* Card Background */}
-        <div className="lg:flex lg:flex-col lg:justify-center">
+        <div className="lg:flex lg:flex-col lg:justify-center ">
             {/* Map number of rows based on the total objects calculate above */}
             {rows.map((row, rowIndex) => (
             <div key={`row-${rowIndex}`} className="grid grid-cols-1 gap-8 mt-8 lg:grid-cols-3">
@@ -45,7 +45,7 @@ const StockData = ({ symbol, prices }) => {
                     //Calculation to determine if the row is even or odd and assign a color to the entire row based on that
                     className={`${
                         rowIndex % 2 === 0 ? "bg-indigo-200" : "bg-indigo-300"
-                        } p-4 shadow space-y-2 duration-200 transition-all rounded-sm hover:shadow-lg`
+                        } p-4 shadow space-y-2 duration-200 transition-all rounded-lg hover:shadow-lg`
                     }
                 >
 

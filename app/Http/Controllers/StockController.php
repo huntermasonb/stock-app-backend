@@ -22,7 +22,7 @@ class StockController extends Controller
     }
 
     /**
-     * Create a new stock
+     * Create a new stock (this should have been to re-direct to a view not an actual function)
      */
     public function create(Array $data): void
     {
@@ -64,7 +64,6 @@ class StockController extends Controller
             $stock->update($combinedData);
             return response()->json(['message'=>'Stock information was updated!']);
         }
-
         //Trigger Create method if stock doesn't exist to save data to the database
         else{
             $this->create($combinedData);

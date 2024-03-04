@@ -34,11 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route to return API data from my React component
-Route::post('/saveData', [StockController::class, 'store'])->middleware('auth', 'verified');
-
 //Routes for Stock Model
 Route::middleware('auth')->group(function () {
     Route::delete('/stock', [StockController::class, 'destroy'])->name('stock.destroy');
+    Route::post('/saveData', [StockController::class, 'store'])->middleware('verified');
 });
 require __DIR__.'/auth.php';
