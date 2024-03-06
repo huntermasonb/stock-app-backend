@@ -77,7 +77,7 @@ const StockData = ({ symbol, prices }) => {
                             More..
                         </button>
                         {/* Use the messy ternary to check if symbol exists and pass that data as the key so the suspense trigger functions correctly for  both */}
-                        {selectedSymbol && selectedSymbol[symbols === "price" ? symbol : symbols] && (
+                        { selectedSymbol[symbols === "price" ? symbol : symbols] && (
                             <DetailedStockData symbol={selectedSymbol[symbols === "price" ? symbol : symbols]}
                                                price={parseFloat(prices[symbols].price ? (prices[symbols].price) : (prices[symbols])).toFixed(2)}
                             />
