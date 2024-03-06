@@ -18,7 +18,7 @@ const combineAPIData = (price, details) => {
     };
 };
 
-//CALL THE FUNCTION TO COMBINE API DATA AND BEGIN THE PROCESS OF STORING IT IN THE DATABASE
+//CALL THE FUNCTION TO COMBINE API DATA AND BEGIN THE PROCESS OF STORING IT IN THE DATABASE. ALSO SUPPORTS RELAYING MESSAGES USING REACT STATE VARIABLES
 export const handleBookmark = async (price, details, setErrorMessage, setSuccessMessage, setIsMessageVisible) => {
     const Price = price;
     const Details = details;

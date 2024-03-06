@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import axios from "axios";
 import clsx from "clsx";
 import { handleBookmark } from '../Functions.js';
 import Loading from "@/Components/Loading.jsx";
 
-const DetailedStockData = React.memo(function DetailedStockData({ symbol, price }) {
+const DetailedStockData = memo(function DetailedStockData({ symbol, price }) {
     console.log(symbol);
     //Variables needed to manage state
     const [details, setDetails] = useState({});
@@ -115,4 +115,4 @@ const DetailedStockData = React.memo(function DetailedStockData({ symbol, price 
         </>
     );
 });
-export default DetailedStockData;
+export default memo(DetailedStockData);

@@ -3,9 +3,12 @@ import {Head, Link} from '@inertiajs/react';
 import {useState} from "react";
 import DeleteClosedIcon from "@/Components/DeleteClosedIcon.jsx";
 import DeleteOpenIcon from "@/Components/DeleteOpenIcon.jsx";
+import SymbolOverview from "@/Pages/TradeViewWidget/SymbolOverview.jsx";
 
 export default function Dashboard({ auth, stocks }) {
     const [isHovering, setIsHovering] = useState(null);
+    const [isSymbolGraphActive, setIsSymbolGraphActive] = useState(false);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -16,14 +19,14 @@ export default function Dashboard({ auth, stocks }) {
             </Head>
             <div className="py-9">
                 <div className="flex flex-col w-full sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm rounded-lg hover:shadow-md dark:shadow-gray-200 dark:hover:shadow-gray-200 transition-shadow duration-200">
+                    <div className="bg-white dark:bg-gray-500 overflow-hidden rounded-lg shadow-md hover:shadow-lg shadow-gray-300 hover:shadow-gray-400 dark:shadow-gray-900 dark:hover:shadow-gray-900 transition-shadow duration-200">
                         {/* Dashboard Header */}
-                        <div className="py-4 text-center text-2xl font-semibold text-indigo-900">Welcome to your dashboard!</div>
+                        <div className="py-4 text-center text-2xl font-semibold text-indigo-900 dark:text-indigo-50">Welcome to your dashboard!</div>
 
                         {/*Below display is very messy and can be done pretty easily to reduce redundancy*/}
                         {/* Stock Labels for large screen size */}
                         <div className="p-2">
-                            <div className="hidden mx-2 lg:grid lg:grid-cols-10 justify-items-center font-semibold" id="LargeScreenLabels" >
+                            <div className="dark:text-indigo-50 hidden mx-2 lg:grid lg:grid-cols-10 justify-items-center font-semibold" id="LargeScreenLabels" >
                                 <div className="justify-self-start pl-2">Name</div>
                                 <div>Symbol</div>
                                 <div>Price</div>
@@ -37,7 +40,7 @@ export default function Dashboard({ auth, stocks }) {
 
                             {/*Stock labels below are not present on desktop screens.*/}
                             {stocks.map((stock) => (
-                                <div className="grid grid-cols-2 lg:grid-cols-10 justify-items-center bg-indigo-50 p-2 my-2 rounded" key={stock.id}>
+                                <div className="grid grid-cols-2 lg:grid-cols-10 justify-items-center bg-indigo-50 dark:bg-indigo-100 p-2 my-2 rounded" key={stock.id}>
                                     <div className="font-semibold lg:hidden">Name:</div><div id="name" className="lg:justify-self-start lg:font-bold m-auto">{stock.name}</div>
                                     <div className="font-semibold lg:hidden">Symbol:</div><div id="symbol" className="m-auto">{stock.symbol}</div>
                                     <div className="font-semibold lg:hidden">Price:</div><div id="price" className="m-auto">{stock.price}</div>
@@ -59,6 +62,12 @@ export default function Dashboard({ auth, stocks }) {
                             ))}
                         </div>
                     </div>
+                </div>
+                <div className="pt-6 flex flex-col justify-center items-center rounded text-white">
+                    <h2 onClick={() => setIsSymbolGraphActive(prevState => !prevState)} className="p-1 rounded-md text-2xl font-semibold drop-shadow bg-indigo-500 hover:bg-indigo-700 shadow-indigo-200 hover:cursor-pointer">View graphs for your bookmarked stocks!</h2>
+                    { isSymbolGraphActive && stocks && (
+                        <SymbolOverview stocks={stocks}/>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>

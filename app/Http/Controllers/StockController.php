@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Stock;
+use function Laravel\Prompts\alert;
 
 class StockController extends Controller
 {
@@ -105,6 +106,7 @@ class StockController extends Controller
     {
         //Extract the stock id from the request to be used in delete method
         $stockID = $request->input('id');
+        alert('message');
 
         //Authorize the user is logged in and remove specified stock using data from dashboard.jsx
         $user = auth()->user();
