@@ -9,6 +9,11 @@ export default function Dashboard({ auth, stocks }) {
     const [isHovering, setIsHovering] = useState(null);
     const [isSymbolGraphActive, setIsSymbolGraphActive] = useState(false);
 
+    const handleClick = () => {
+        setIsSymbolGraphActive(prevState => !prevState);
+        document.activeElement.blur();
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -53,7 +58,7 @@ export default function Dashboard({ auth, stocks }) {
                                     <div className="font-semibold lg:hidden">Dividends/Share:</div><div id="dividend_per_share" className="m-auto">{stock.dividend_per_share}</div>
                                     <div className="mt-1 col-span-2 lg:col-span-1 " onMouseEnter={() => setIsHovering(stock.id)} onMouseLeave={() =>setIsHovering(null)}>
                                         <Link as="button" method="delete" href={route('stock.destroy', { id: stock.id })}
-                                               className="text-indigo-100 bg-red-700 rounded-md shadow-sm hover:shadow-md ring-red-700 hover:ring-1 focus:ring-2 focus:ring-offset-1 focus:ring-red-900 px-1 max-h-10 transition duration-200"
+                                               className="text-indigo-100 bg-red-700 rounded-md shadow-sm shadow-red-900 hover:shadow-md hover:shadow-red-950 ring-red-700 hover:ring-1 focus:ring-2 focus:ring-offset-1 focus:ring-red-900 px-1 max-h-10 transition duration-200"
                                         >
                                             {isHovering === stock.id ? <DeleteOpenIcon /> : <DeleteClosedIcon /> }
                                         </Link>
@@ -63,8 +68,10 @@ export default function Dashboard({ auth, stocks }) {
                         </div>
                     </div>
                 </div>
-                <div className="pt-6 flex flex-col justify-center items-center rounded text-white">
-                    <h2 onClick={() => setIsSymbolGraphActive(prevState => !prevState)} className="p-1 rounded-md text-2xl font-semibold drop-shadow bg-indigo-500 hover:bg-indigo-700 shadow-indigo-200 hover:cursor-pointer">View graphs for your bookmarked stocks!</h2>
+                <div className="sm:p-8 pt-4 flex flex-col justify-center items-center text-white">
+                    <button onClick={handleClick} className="p-1 rounded-md text-center text-2xl font-semibold shadow-sm shadow-indigo-300 dark:shadow-indigo-800 hover:shadow-md hover:shadow-indigo-400 dark:hover:shadow-indigo-950 bg-indigo-500 hover:bg-indigo-700 ring-indigo-400 hover:ring-2 focus:ring-4 focus:ring-offset-1 hover:cursor-pointer transition duration-150 ease-in-out">
+                        {isSymbolGraphActive ? "Close Graphs" : "View Graphs"}
+                    </button>
                     { isSymbolGraphActive && stocks && (
                         <SymbolOverview stocks={stocks}/>
                     )}

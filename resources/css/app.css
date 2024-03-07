@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* STYLES FOR TRADINGVIEW SYMBOL OVERVIEW WIDGET ON THE DASHBOARD */
+.tradingview-widget-container > iframe {
+    border-radius: 16px;
+}
+.tradingview-widget-container  iframe #mediumwidgetembed{
+    border: none;
+}
