@@ -63,7 +63,7 @@ function SymbolOverviewWidget({stocks}) {
         }
     },[stocks]);
     return (
-        <div className="tradingview-widget-container mt-10 rounded-2xl shadow-md hover:shadow-lg shadow-gray-400 hover:shadow-gray-500 dark:shadow-gray-900 dark:hover:shadow-gray-900 transition duration-150 ease-in-out" ref={container}>
+        <div className="tradingview-widget-container mt-10 rounded-2xl shadow-sm shadow-gray-400 hover:shadow-gray-500 dark:shadow-gray-900 dark:hover:shadow-gray-900 transition duration-150 ease-in-out sm:px-6 lg:px-8" ref={container}>
             <div className="tradingview-widget-container__widget"></div>
         </div>
     );

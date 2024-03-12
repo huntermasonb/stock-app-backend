@@ -7,10 +7,15 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## Custom
+## Installation
 
-After completely setting up the project, its container in Docker, and getting it to run successfully, make sure to install Node dependencies for the front end again using `npm install`.<br>
-To render the React frontend files, you must run `npm run dev` for development purposes.
+After completely setting up the project, its container in Docker, and getting it to run successfully, make sure to install Node dependencies for the front end again using `npm install`.
+
+I would recommend pulling the project from my [GitHub](https://github.com/huntermasonb/stock-app-backend), and wherever you perform docker commands, running the equivalent of `docker compose up` or in my case `sail up`.
+
+To render the React frontend files, you may run `npm run dev` for development purposes, or build assets for production using `npm run build`. If using `npm run build` you will need to build assets whenever there are changes to reflect them.
+
+
 
 ## About Laravel
 

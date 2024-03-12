@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Stock;
 use function Laravel\Prompts\alert;
+use function Laravel\Prompts\error;
 
 class StockController extends Controller
 {
@@ -43,7 +44,7 @@ class StockController extends Controller
             'price' => 'required|numeric',
             'beta' => 'required|numeric',
             'EPS' => 'required|numeric',
-            'price_to_earnings' => 'required|numeric',
+            'price_to_earnings' => 'nullable|string',
             'dividend_yield' => 'nullable|string',
             'dividend_date' => 'nullable|string',
             'dividend_per_share' => 'nullable|string'
@@ -106,10 +107,15 @@ class StockController extends Controller
     {
         //Extract the stock id from the request to be used in delete method
         $stockID = $request->input('id');
-        alert('message');
 
         //Authorize the user is logged in and remove specified stock using data from dashboard.jsx
         $user = auth()->user();
-        $user->stocks()->where('id',$stockID)->delete();
+        $stock = $user->stocks()->where('id',$stockID);
+
+        if ($stock && $stock->exists()){
+            $stock->delete();
+        } else {
+            error("An error occurred when deleting the last stock.");
+        }
     }
 }

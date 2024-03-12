@@ -4,6 +4,7 @@ import {useState} from "react";
 import DeleteClosedIcon from "@/Components/DeleteClosedIcon.jsx";
 import DeleteOpenIcon from "@/Components/DeleteOpenIcon.jsx";
 import SymbolOverview from "@/Pages/TradeViewWidget/SymbolOverview.jsx";
+import PrimaryButton from "@/Components/PrimaryButton.jsx";
 
 export default function Dashboard({ auth, stocks }) {
     const [isHovering, setIsHovering] = useState(null);
@@ -24,7 +25,7 @@ export default function Dashboard({ auth, stocks }) {
             </Head>
             <div className="py-9">
                 <div className="flex flex-col w-full sm:px-6 lg:px-8">
-                    <div className="bg-white dark:bg-gray-500 overflow-hidden rounded-lg shadow-md hover:shadow-lg shadow-gray-300 hover:shadow-gray-400 dark:shadow-gray-900 dark:hover:shadow-gray-900 transition-shadow duration-200">
+                    <div className="bg-white dark:bg-gray-500 overflow-hidden rounded-lg shadow-sm hover:shadow-lg shadow-gray-300 hover:shadow-gray-400 dark:shadow-gray-900 dark:hover:shadow-gray-900 transition-shadow duration-200">
                         {/* Dashboard Header */}
                         <div className="py-4 text-center text-2xl font-semibold text-indigo-900 dark:text-indigo-50">Welcome to your dashboard!</div>
 
@@ -68,10 +69,10 @@ export default function Dashboard({ auth, stocks }) {
                         </div>
                     </div>
                 </div>
-                <div className="sm:p-8 pt-4 flex flex-col justify-center items-center text-white">
-                    <button onClick={handleClick} className="p-1 rounded-md text-center text-2xl font-semibold shadow-sm shadow-indigo-300 dark:shadow-indigo-800 hover:shadow-md hover:shadow-indigo-400 dark:hover:shadow-indigo-950 bg-indigo-500 hover:bg-indigo-700 ring-indigo-400 hover:ring-2 focus:ring-4 focus:ring-offset-1 hover:cursor-pointer transition duration-150 ease-in-out">
+                <div className="mt-10 flex flex-col justify-center items-center text-white">
+                    <PrimaryButton onClick={handleClick} className="p-1 rounded-md text-center text-2xl font-semibold shadow-sm shadow-indigo-300 dark:shadow-indigo-800 hover:shadow-md hover:shadow-indigo-400 dark:hover:shadow-indigo-950 bg-indigo-500 hover:bg-indigo-700 ring-indigo-400 hover:ring-2 focus:ring-4 focus:ring-offset-1 hover:cursor-pointer transition duration-150 ease-in-out">
                         {isSymbolGraphActive ? "Close Graphs" : "View Graphs"}
-                    </button>
+                    </PrimaryButton>
                     { isSymbolGraphActive && stocks && (
                         <SymbolOverview stocks={stocks}/>
                     )}

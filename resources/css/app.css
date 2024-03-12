@@ -6,6 +6,8 @@
 .tradingview-widget-container > iframe {
     border-radius: 16px;
 }
-.tradingview-widget-container  iframe #mediumwidgetembed{
-    border: none;
+
+.tradingview-widget-container__widget {
+
 }
+

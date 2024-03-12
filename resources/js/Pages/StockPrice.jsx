@@ -8,6 +8,8 @@ const StockPrice = () => {
   const [symbols, setSymbols] = useState('');
   const [sortedSymbols, setSortedSymbols] = useState('');
   const [prices, setPrices] = useState([]);
+  const APIKey = '577a69f858msh40fe029fdfb0c7bp1d982cjsna5b05d487d92';
+  const APIHost = 'twelve-data1.p.rapidapi.com';
 
   // Function to handle changes to the stock search bar
   const handleInputChange = (event) => {
@@ -47,8 +49,8 @@ const StockPrice = () => {
           outputsize: '8'
         },
         headers: {
-          'X-RapidAPI-Key': '577a69f858msh40fe029fdfb0c7bp1d982cjsna5b05d487d92',
-          'X-RapidAPI-Host': 'twelve-data1.p.rapidapi.com'
+          'X-RapidAPI-Key': APIKey,
+          'X-RapidAPI-Host': APIHost
         }
       };
       try {
@@ -97,7 +99,7 @@ const StockPrice = () => {
                   />
                   <button
                       type="submit"
-                      className="w-1/3 min-w-14 max-w-[250px] px-1 font-semibold rounded shadow-sm transition-colors duration-150 ease-in-out bg-indigo-500 text-indigo-100 hover:bg-indigo-600"
+                      className="w-1/3 min-w-14 max-w-[250px] px-1 font-semibold text-sm rounded shadow-sm transition-colors duration-150 ease-in-out bg-indigo-500 text-indigo-100 hover:bg-indigo-600"
                       aria-label="Search Button"
                   >
                     Search

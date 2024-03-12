@@ -21,7 +21,6 @@ return new class extends Migration
             $table->float('dividend_yield')->nullable();
             $table->string('dividend_date')->nullable();
             $table->float('dividend_per_share')->nullable();
-
             $table->foreignId('user_id')->constrained(
                 table: 'users', indexName: 'id'
             );

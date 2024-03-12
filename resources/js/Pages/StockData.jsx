@@ -28,7 +28,7 @@ const StockData = ({ symbol, prices }) => {
             Parent Div on StockPrice exists already and class id is 'stockPrices
             'CARD' FOR DISPLAYING ALL STOCK INFORMATION
         */}
-        <h1 className="mt-6 text-center font-bold text-2xl dark:text-indigo-50">
+        <h1 className="mt-6 text-center font-bold text-3xl dark:text-indigo-50 wrap">
             {symbol.length ? "Stock Prices" : "Enter Symbols to Show Stock Prices. Please Note ETF's detailed information will not work."}
         </h1>
         {/* Card Background */}
@@ -69,7 +69,9 @@ const StockData = ({ symbol, prices }) => {
                             ${ parseFloat(prices[symbols].price ? (prices[symbols].price): (prices[symbols])).toFixed(2) }
                         </div>
                     </div>
-                    {/* Below is very messy and should be reworked. I have nested ternaries to set classes, could potentially clean this up by using clsx */}
+                    {/* Below is very messy and should be reworked. I have nested ternaries to set classes, could potentially clean this up by using clsx
+                        Display the detailed stock data component when below is clicked.
+                    */}
                     <div className="flex flex-col justify-center">
                         <button className={`${isButtonHidden(symbols === "price" ? symbol : symbols) ? "hidden" : ""} transition-all duration-150 ease-in-out`}
                                 onClick={() => handleButtonClick(symbols === "price" ? symbol : symbols)}
