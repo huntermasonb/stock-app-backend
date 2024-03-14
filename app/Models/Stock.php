@@ -27,7 +27,12 @@ class Stock extends Model
         'price_to_earnings',
         'dividend_yield',
         'dividend_date',
-        'dividend_per_share'
+        'dividend_per_share',
+        'rating_strong_buy',
+        'rating_buy',
+        'rating_hold',
+        'rating_sell',
+        'rating_strong_sell'
     ];
 
     public function user(): BelongsTo

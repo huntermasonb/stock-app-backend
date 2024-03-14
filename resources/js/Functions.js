@@ -10,24 +10,29 @@ const combineAPIData = (price, details) => {
         symbol: stockDetails.Symbol,
         price: parseFloat(stockPrice).toFixed(2),
         beta: parseFloat(stockDetails.Beta).toFixed(3),
-        EPS: Number(stockDetails.EPS).toFixed(2),
+        EPS: parseFloat(stockDetails.EPS).toFixed(3),
         price_to_earnings: parseFloat(stockDetails.PERatio).toFixed(3),
         dividend_yield: stockDetails.DividendYield,
         dividend_date: stockDetails.DividendDate,
         dividend_per_share: stockDetails.DividendPerShare,
+        rating_strong_buy: parseInt(stockDetails.AnalystRatingStrongBuy),
+        rating_buy: parseInt(stockDetails.AnalystRatingBuy),
+        rating_hold: parseInt(stockDetails.AnalystRatingHold),
+        rating_sell: parseInt(stockDetails.AnalystRatingSell),
+        rating_strong_sell: parseInt(stockDetails.AnalystRatingStrongSell),
     };
 };
 
 //CALL THE FUNCTION TO COMBINE API DATA AND BEGIN THE PROCESS OF STORING IT IN THE DATABASE. ALSO SUPPORTS RELAYING MESSAGES USING REACT STATE VARIABLES
 export const handleBookmark = async (price, details, setErrorMessage, setSuccessMessage, setIsMessageVisible) => {
-    const Price = price;
-    const Details = details;
+    const stockPrice = price;
+    const stockDetails = details;
     setErrorMessage(null);
     setIsMessageVisible(null);
 
     //Call the function to combine the data together
-    const combinedData = combineAPIData(Price, Details);
-
+    const combinedData = combineAPIData(stockPrice, stockDetails);
+    console.log(combinedData);
     //Send combinedData to laravel via axios request and a route created in /routes/web.php.
     try {
         const response = await axios.post('/saveData', combinedData);

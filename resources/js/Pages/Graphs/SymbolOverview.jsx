@@ -47,23 +47,9 @@ function SymbolOverviewWidget({stocks}) {
                 ]
             }`;
         container.current.appendChild(script);
-        // Inject CSS to remove the border associated with 'tv-widget-chart--with-border'
-        const iframe = container.current.querySelector('iframe');
-        if (iframe) {
-            iframe.onload = () => {
-                const css = `
-                    .tv-widget-chart--with-border {
-                        border: none !important;
-                    }
-                `;
-                const style = iframe.contentDocument.createElement('style');
-                style.innerHTML = css;
-                iframe.contentDocument.head.appendChild(style);
-            };
-        }
     },[stocks]);
     return (
-        <div className="tradingview-widget-container mt-10 rounded-2xl shadow-sm shadow-gray-400 hover:shadow-gray-500 dark:shadow-gray-900 dark:hover:shadow-gray-900 transition duration-150 ease-in-out sm:px-6 lg:px-8" ref={container}>
+        <div className="tradingview-widget-container shadow-gray-400 hover:shadow-gray-500 dark:shadow-gray-900 dark:hover:shadow-gray-900 transition duration-150 ease-in-out sm:px-6 lg:px-8" ref={container}>
             <div className="tradingview-widget-container__widget"></div>
         </div>
     );

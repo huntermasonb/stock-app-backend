@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Stock;
-use function Laravel\Prompts\alert;
 use function Laravel\Prompts\error;
 
 class StockController extends Controller
@@ -47,7 +46,12 @@ class StockController extends Controller
             'price_to_earnings' => 'nullable|string',
             'dividend_yield' => 'nullable|string',
             'dividend_date' => 'nullable|string',
-            'dividend_per_share' => 'nullable|string'
+            'dividend_per_share' => 'nullable|string',
+            'rating_strong_buy' => 'nullable|numeric',
+            'rating_buy' => 'nullable|numeric',
+            'rating_hold' => 'nullable|numeric',
+            'rating_sell' => 'nullable|numeric',
+            'rating_strong_sell' => 'nullable|numeric',
         ]);
     }
 
@@ -60,7 +64,7 @@ class StockController extends Controller
         $validatedData = $this->validateStockData($request);
         $combinedData = $validatedData;
 
-        //Check to see if the stock exists and trigger the Update method if so
+        //Check to see if the stock exists, user is logged in, and trigger the Update method if so
         $stock = auth()->user()->stocks()->where('name', $combinedData['name'])->first();
         if ($stock && $stock->exists()){
             $stock->update($combinedData);

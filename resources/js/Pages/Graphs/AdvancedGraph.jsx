@@ -1,9 +1,9 @@
 // TradingViewWidget.jsx
 import React, { useEffect, useRef, memo } from 'react';
 
-function AdvancedGraphWidget() {
+function AdvancedGraphWidget({stock}) {
     const container = useRef();
-
+    console.log(stock)
     useEffect(
         () => {
             const script = document.createElement("script");
@@ -13,7 +13,9 @@ function AdvancedGraphWidget() {
             script.innerHTML = `
         {
           "autosize": true,
-          "symbol": "NASDAQ:AAPL",
+          "height": 500,
+          "width": "100%",
+          "symbol": "${stock}",
           "interval": "D",
           "timezone": "America/New_York",
           "theme": "dark",
@@ -24,8 +26,8 @@ function AdvancedGraphWidget() {
           "withdateranges": true,
           "hide_side_toolbar": false,
           "allow_symbol_change": true,
-          "details": true,
           "hotlist": true,
+          "details": true,
           "calendar": false,
           "support_host": "https://www.tradingview.com"
         }`;
@@ -35,9 +37,9 @@ function AdvancedGraphWidget() {
     );
 
     return (
-        <div className="tradingview-widget-container" ref={container} style={{ height: "100%", width: "100%" }}>
-            <div className="tradingview-widget-container__widget" style={{ height: "calc(100% - 32px)", width: "100%" }}></div>
-            <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="text-gray-900">TradingView</span></a></div>
+        <div className="tradingview-widget-container" ref={container}>
+            <div className="tradingview-widget-container__widget" style={{ height: "calc(100% - 16px)", width: "100%" }}></div>
+            <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span>If you would like to change stocks, please click on current stock and type.</span></a></div>
         </div>
     );
 }

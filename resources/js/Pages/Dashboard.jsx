@@ -3,17 +3,18 @@ import {Head, Link} from '@inertiajs/react';
 import {useState} from "react";
 import DeleteClosedIcon from "@/Components/DeleteClosedIcon.jsx";
 import DeleteOpenIcon from "@/Components/DeleteOpenIcon.jsx";
-import SymbolOverview from "@/Pages/TradeViewWidget/SymbolOverview.jsx";
+import SymbolOverview from "@/Pages/Graphs/SymbolOverview.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import GraphsButton from "@/Pages/Graphs/Partials/GraphsButton.jsx";
 
 export default function Dashboard({ auth, stocks }) {
     const [isHovering, setIsHovering] = useState(null);
-    const [isSymbolGraphActive, setIsSymbolGraphActive] = useState(false);
+   /* const [isGraphActive, setIsGraphActive] = useState(false);
 
     const handleClick = () => {
-        setIsSymbolGraphActive(prevState => !prevState);
+        setIsGraphActive(prevState => !prevState);
         document.activeElement.blur();
-    }
+    }*/
 
     return (
         <AuthenticatedLayout
@@ -69,13 +70,14 @@ export default function Dashboard({ auth, stocks }) {
                         </div>
                     </div>
                 </div>
-                <div className="mt-10 flex flex-col justify-center items-center text-white">
-                    <PrimaryButton onClick={handleClick} className="p-1 rounded-md text-center text-2xl font-semibold shadow-sm shadow-indigo-300 dark:shadow-indigo-800 hover:shadow-md hover:shadow-indigo-400 dark:hover:shadow-indigo-950 bg-indigo-500 hover:bg-indigo-700 ring-indigo-400 hover:ring-2 focus:ring-4 focus:ring-offset-1 hover:cursor-pointer transition duration-150 ease-in-out">
-                        {isSymbolGraphActive ? "Close Graphs" : "View Graphs"}
+                <div className="flex flex-col justify-center items-center text-white">
+                    {/*<PrimaryButton onClick={handleClick} className="p-1 rounded-md text-center text-2xl font-semibold shadow-sm shadow-indigo-300 dark:shadow-indigo-800 hover:shadow-md hover:shadow-indigo-400 dark:hover:shadow-indigo-950 bg-indigo-500 hover:bg-indigo-700 ring-indigo-400 hover:ring-2 focus:ring-4 focus:ring-offset-1 hover:cursor-pointer transition duration-150 ease-in-out">
+                        {isGraphActive ? "Close Graphs" : "View Graphs"}
                     </PrimaryButton>
-                    { isSymbolGraphActive && stocks && (
+                    { isGraphActive && stocks && (
                         <SymbolOverview stocks={stocks}/>
-                    )}
+                    )}*/}
+                    <GraphsButton stocks={stocks} stock={stocks[0].symbol} className="" />
                 </div>
             </div>
         </AuthenticatedLayout>
