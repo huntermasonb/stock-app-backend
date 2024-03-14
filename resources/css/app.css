@@ -84,24 +84,26 @@ a {
 
 .menu-item {
     font-size:small;
-    visibility: hidden;
+    /*visibility: hidden;*/
+    opacity: 0;
     background: #4338ca;
     border-radius: 100%;
     width: 80px;
     height: 80px;
     position: absolute;
-    top: 50%; /* Adjusted */
-    left: 50%; /* Adjusted */
-    transform: translate(-50%, -50%); /* Adjusted */
-    transition: transform ease-out 1000ms;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform ease-in-out 1000ms, background-color 200ms ease-in-out, color 200ms ease-in-out;
     color: white;
     text-align: center;
     line-height: 80px;
 }
 
-.menu-item:hover {
-    background: white;
+.menu-open:checked ~ .menu-item:hover {
+    background: #c7d2fe;
     color: #140f5a;
+    /*transition: background-color 200ms, color 200ms ease-in-out;*/
 }
 
 .menu-open-button {
@@ -110,8 +112,8 @@ a {
     height: 80px;
     margin-left: -40px;
     position: absolute;
-    top: 40%; /* Adjusted */
-    left: 50%; /* Adjusted */
+    top: 40%;
+    left: 50%;
     color: white;
     text-align: center;
     line-height: 80px;
@@ -132,15 +134,19 @@ a {
 }
 
 .menu-open:checked ~ .menu-item {
-    visibility: visible;
+    /*visibility: visible;*/
+    opacity: 1;
     margin-left: -40px;
     transition-timing-function: cubic-bezier(0.935, 0.000, 0.340, 1.330);
+    transition: transform 400ms ease-in, opacity 400ms ease-in, background-color 200ms ease-in, color 200ms ease-in;
     transform: translate3d(80px, -105px, 0);
 }
 
 .menu-open:not(:checked) ~ .menu-item {
-    visibility: hidden;
-    transition: visibility 200ms ease-out; /* Define transition for closing */
+    /*visibility: hidden;*/
+    opacity: 0;
+    transition: transform 400ms ease-out, opacity 400ms ease-out, background-color 200ms ease-in-out, color 200ms ease-in-out;
+    transform: translate3d(-35px,-40px,0);
 }
 
 

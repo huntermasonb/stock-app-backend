@@ -9,6 +9,7 @@ const GraphsButton = ({stocks, stock}) => {
 
     const handleMenuItemClick = (menuItem) => {
         setSelectedMenuItem(menuItem);
+        //setMenuOpen(!menuOpen);
     };
 
     return (
@@ -26,17 +27,17 @@ const GraphsButton = ({stocks, stock}) => {
                     </label>
 
                     {/* Replace anchor tags with React components */}
-                    <div className={`menu-item`}>
+                    <div className="menu-item shadow-sm shadow-indigo-800 hover:shadow-md">
                     <button onClick={() => handleMenuItemClick('symbolOverview')}>
                             Overview
                         </button>
                     </div>
-                  <div className={`menu-item `}>
+                  <div className={`menu-item shadow-sm shadow-indigo-800 hover:shadow-md`}>
                         <button onClick={() => handleMenuItemClick('advancedGraph')}>
                             Advanced
                         </button>
                     </div>
-                    <div className={`menu-item `}>
+                    <div className={`menu-item shadow-sm shadow-indigo-800 hover:shadow-md`}>
                         <button onClick={() => handleMenuItemClick('analystRating')}>
                             Ratings
                         </button>
