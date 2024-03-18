@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
 import SymbolOverview from "@/Pages/Graphs/SymbolOverview.jsx";
 import AdvancedGraph from "@/Pages/Graphs/AdvancedGraph.jsx";
-// import AnalystRating from "@/Pages/Graphs/AnalystRating.jsx";
+import AnalystRating from "@/Pages/Graphs/AnalystRating.jsx";
 
 const GraphsButton = ({stocks, stock}) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+    const [selectedStock, setSelectedStock] = useState(null);
+    const [ratings, setRatings] = useState(null);
+    const [showRatings, setShowRatings] = useState(false);
 
-    const handleMenuItemClick = (menuItem) => {
-        setSelectedMenuItem(menuItem);
-        //setMenuOpen(!menuOpen);
+    // Function to set ratings for the selected stock
+    const setStockRatings = (stock) => {
+        setSelectedStock(stock);
+        setShowRatings(false);
+        const newRatings = {
+            strong_buy: stock.rating_strong_buy,
+            buy: stock.rating_buy,
+            hold: stock.rating_hold,
+            sell: stock.rating_sell,
+            strong_sell: stock.rating_strong_sell,
+        };
+        setRatings(newRatings);
     };
 
     return (
         <>
-            <div className="menu-container flex justify-center items-center">
+            <div className="menu-container">
                 <nav className="menu">
-                    <input type="checkbox" className="menu-open" name="menu-open" id="menu-open" checked={menuOpen} onChange={() => setMenuOpen(!menuOpen)}/>
+                    <input type="checkbox" className="menu-open" name="menu-open" id="menu-open" checked={menuOpen} onChange={() => {setMenuOpen(!menuOpen); setShowRatings(false)}}/>
                     <label className="menu-open-button bg-indigo-700" htmlFor="menu-open">
                         <div className="sm:hidden">
                             <span className="hamburger hamburger-1 "></span>
@@ -26,30 +38,43 @@ const GraphsButton = ({stocks, stock}) => {
                         <div className="hidden sm:block text-sm leading-[80px]">{!menuOpen ? 'Graphs' : 'Close'}</div>
                     </label>
 
-                    {/* Replace anchor tags with React components */}
                     <div className="menu-item shadow-sm shadow-indigo-800 hover:shadow-md">
-                    <button onClick={() => handleMenuItemClick('symbolOverview')}>
+                        <button onClick={() => {setSelectedMenuItem('symbolOverview'); setShowRatings(false)}}>
                             Overview
                         </button>
                     </div>
-                  <div className={`menu-item shadow-sm shadow-indigo-800 hover:shadow-md`}>
-                        <button onClick={() => handleMenuItemClick('advancedGraph')}>
+                    <div className={`menu-item shadow-sm shadow-indigo-800 hover:shadow-md`}>
+                        <button onClick={() => {setSelectedMenuItem('advancedGraph'); setShowRatings(false);}}>
                             Advanced
                         </button>
                     </div>
                     <div className={`menu-item shadow-sm shadow-indigo-800 hover:shadow-md`}>
-                        <button onClick={() => handleMenuItemClick('analystRating')}>
+                        <button onClick={() => setShowRatings(!showRatings)}>
                             Ratings
                         </button>
+
+                        <div className="flex flex-col items-center max-w-fit leading-loose max-h-6">
+                            <ul>
+                                {showRatings && stocks.map((stockItem, index) => (
+                                    <li className=" text-nowrap max-h-6" key={index}>
+                                        <button className="hover:text-lavender-300" onClick={() => {setStockRatings(stockItem); setSelectedMenuItem('analystRating')}}>
+                                            {stockItem.name}
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </nav>
             </div>
+            <div className="flex justify-center w-full mt-20">
+                {selectedMenuItem === 'symbolOverview' && menuOpen && <SymbolOverview stocks={stocks}/>}
+                {selectedMenuItem === 'advancedGraph' && menuOpen && <AdvancedGraph stock={stock}/>}
 
-            {selectedMenuItem === 'symbolOverview' && menuOpen && <SymbolOverview stocks={stocks} />}
-            {selectedMenuItem === 'advancedGraph' && menuOpen && <AdvancedGraph stock={stock} />}
-            {/*{selectedMenuItem === 'analystRating' && menuOpen && <AnalystRating />}*/}
+                {selectedMenuItem === 'analystRating' && menuOpen && selectedStock && <AnalystRating ratings={ratings} />}
+            </div>
         </>
     );
 };
-
+// onClick={() => setSelectedMenuItem('analystRating')}
 export default GraphsButton;

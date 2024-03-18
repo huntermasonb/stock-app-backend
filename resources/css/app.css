@@ -13,25 +13,6 @@ a {
     color: inherit;
 }
 
-.goo {
-    filter: url('#goo');
-}
-
-.ball {
-    background: #e91e63;
-    border-radius: 100%;
-    width: 80px;
-    height: 80px;
-    margin-left: -40px;
-    position: absolute;
-    top: 20px;
-    color: white;
-    text-align: center;
-    line-height: 80px;
-    transform: translate3d(0,0,0);
-    transition: transform ease-out 200ms;
-}
-
 .menu-open {
     display: none;
 }
