@@ -22,7 +22,7 @@ function AdvancedGraphWidget({stock}) {
           "style": "8",
           "locale": "en",
           "enable_publishing": false,
-          "backgroundColor": "rgba(53, 28, 117, 1)",
+          "backgroundColor": "#311b92",
           "withdateranges": true,
           "hide_side_toolbar": false,
           "allow_symbol_change": true,

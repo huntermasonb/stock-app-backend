@@ -67,7 +67,7 @@ a {
     font-size:small;
     /*visibility: hidden;*/
     opacity: 0;
-    background: #4338ca;
+    background: #4338ca; /* indigo-700 */
     border-radius: 100%;
     width: 80px;
     height: 80px;
@@ -82,9 +82,8 @@ a {
 }
 
 .menu-open:checked ~ .menu-item:hover {
-    background: #c7d2fe;
-    color: #140f5a;
-    /*transition: background-color 200ms, color 200ms ease-in-out;*/
+    background: #c7d2fe;/* indigo-200 */
+    color: #1e1b4b; /* indigo-950 */
 }
 
 .menu-open-button {
@@ -112,6 +111,10 @@ a {
     transition-timing-function: linear;
     transition-duration: 200ms;
     transform: scale(0.8,0.8) translate3d(0,0,0);
+}
+
+.menu-open:checked + .menu-open-button:hover {
+    transform: scale(1,1) translate3d(0,0,0);
 }
 
 .menu-open:checked ~ .menu-item {
@@ -144,7 +147,7 @@ a {
 
 .menu-open:checked ~ .menu-item:nth-child(4) {
     transition-duration: 380ms;
-    transform: translate3d(90px, -35px, 0);
+    transform: translate3d(95px, -35px, 0);
 }
 
 .menu-open:checked ~ .menu-item:nth-child(5) {

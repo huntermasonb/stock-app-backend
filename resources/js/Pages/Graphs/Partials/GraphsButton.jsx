@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import SymbolOverview from "@/Pages/Graphs/SymbolOverview.jsx";
 import AdvancedGraph from "@/Pages/Graphs/AdvancedGraph.jsx";
 import AnalystRating from "@/Pages/Graphs/AnalystRating.jsx";
+import Loading from "@/Components/Loading.jsx";
+
 
 const GraphsButton = ({stocks, stock}) => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -67,14 +69,15 @@ const GraphsButton = ({stocks, stock}) => {
                     </div>
                 </nav>
             </div>
-            <div className="flex justify-center w-full mt-20">
-                {selectedMenuItem === 'symbolOverview' && menuOpen && <SymbolOverview stocks={stocks}/>}
-                {selectedMenuItem === 'advancedGraph' && menuOpen && <AdvancedGraph stock={stock}/>}
+            <Suspense fallback={<Loading width={200} height={300}/>} >
+                <div id="graphs-container" className="graphs-container flex flex-col items-center w-full mt-20">
+                    {selectedMenuItem === 'symbolOverview' && menuOpen && <SymbolOverview stocks={stocks}/>}
+                    {selectedMenuItem === 'advancedGraph' && menuOpen && <AdvancedGraph stock={stock}/>}
 
-                {selectedMenuItem === 'analystRating' && menuOpen && selectedStock && <AnalystRating ratings={ratings} />}
-            </div>
+                    {selectedMenuItem === 'analystRating' && menuOpen && selectedStock && <AnalystRating ratings={ratings} stockName={selectedStock.name} />}
+                </div>
+            </Suspense>
         </>
     );
 };
-// onClick={() => setSelectedMenuItem('analystRating')}
 export default GraphsButton;
