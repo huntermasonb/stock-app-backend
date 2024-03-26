@@ -55,11 +55,11 @@ const GraphsButton = ({stocks, stock}) => {
                             Ratings
                         </button>
 
-                        <div className="flex flex-col items-center max-w-fit leading-loose max-h-6">
+                        <div className="rating-option flex flex-col items-center max-w-fit leading-loose max-h-6">
                             <ul>
                                 {showRatings && stocks.map((stockItem, index) => (
                                     <li className=" text-nowrap max-h-6" key={index}>
-                                        <button className="hover:text-lavender-300" onClick={() => {setStockRatings(stockItem); setSelectedMenuItem('analystRating')}}>
+                                        <button className="text-indigo-950 dark:text-white hover:text-lavender-300" onClick={() => {setStockRatings(stockItem); setSelectedMenuItem('analystRating')}}>
                                             {stockItem.name}
                                         </button>
                                     </li>

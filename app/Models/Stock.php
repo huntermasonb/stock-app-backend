@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Stock extends Model
 {
@@ -34,9 +34,13 @@ class Stock extends Model
         'rating_sell',
         'rating_strong_sell'
     ];
-
+    // Relationships
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function group(): HasMany
+    {
+        return $this->hasMany(Group::class);
     }
 }

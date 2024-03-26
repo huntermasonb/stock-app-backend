@@ -31,7 +31,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Name" className=" dark:text-gray-100" />
 
                     <TextInput
                         id="name"
@@ -47,7 +47,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Email" className=" dark:text-gray-100" />
 
                     <TextInput
                         id="email"
@@ -77,7 +77,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         </p>
 
                         {status === 'verification-link-sent' && (
-                            <div className="mt-2 font-medium text-sm text-green-600">
+                            <div className="mt-2 font-medium text-sm text-green-600 ">
                                 A new verification link has been sent to your email address.
                             </div>
                         )}

@@ -62,6 +62,7 @@ export default function Dashboard({ auth, stocks }) {
                         </div>
                     </div>
                 </div>
+                {/* This button looks very out of place and I need to find a better place for it. */}
                 <div className="flex flex-col justify-center items-center text-white">
                     <GraphsButton stocks={stocks} stock={stocks[0].symbol} className="" />
                 </div>
