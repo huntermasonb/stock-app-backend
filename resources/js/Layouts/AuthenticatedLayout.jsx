@@ -24,6 +24,9 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink className="text-indigo-100 hover:text-indigo-300 focus:text-indigo-200 text-xl" href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                                <NavLink className="text-indigo-100 hover:text-indigo-300 focus:text-indigo-200 text-xl" href={route('group.index')} active={route().current('group.index')}>
+                                    Groups
+                                </NavLink>
                             </div>
                         </div>
 
@@ -115,7 +118,7 @@ export default function Authenticated({ user, header, children }) {
 
             {header && (
                 <header className="bg-white dark:bg-gray-600 shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 dark:text-indigo-950">{header}</div>
                 </header>
             )}
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,5 +39,15 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::delete('/stock', [StockController::class, 'destroy'])->name('stock.destroy');
     Route::post('/saveData', [StockController::class, 'store'])->middleware('verified');
+});
+
+//Routes for Group Model
+Route::middleware('auth')->group(function () {
+    Route::get('/groups', [GroupController::class, 'index'])->name('group.index');
+    Route::get('/groups/create', [GroupController::class, 'create'])->name('group.create');
+    Route::post('/groups/store', [GroupController::class, 'store'])->name('group.store');
+    Route::post('/groups/edit/{group_id}', [GroupController::class, 'update'])->name('group.update');
+    Route::delete('/groups/destroy/{group_id}', [GroupController::class, 'destroy'])->name('group.destroy');
+    Route::get('/groups/{group_id}', [GroupController::class, 'show'])->name('group.show');
 });
 require __DIR__.'/auth.php';

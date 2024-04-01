@@ -114,7 +114,7 @@ class StockController extends Controller
 
         //Authorize the user is logged in and remove specified stock using data from dashboard.jsx
         $user = auth()->user();
-        $stock = $user->stocks()->where('id',$stockID);
+        $stock = $user->stocks()->findOrFail($stockID);
 
         if ($stock && $stock->exists()){
             $stock->delete();

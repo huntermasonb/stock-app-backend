@@ -8,40 +8,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Stock extends Model
+class Group extends Model
 {
     use HasFactory;
-
     /**
      * Attributes that are mass assignable
      *
      * @var array<int, string>
      **/
     protected $fillable = [
-        'created_at',
-        'updated_at',
         'name',
-        'symbol',
-        'price',
-        'beta',
-        'EPS',
-        'price_to_earnings',
-        'dividend_yield',
-        'dividend_date',
-        'dividend_per_share',
-        'rating_strong_buy',
-        'rating_buy',
-        'rating_hold',
-        'rating_sell',
-        'rating_strong_sell'
+        'user_id',
     ];
-    // Relationships
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function group(): BelongsToMany
+    public function stocks(): BelongsToMany
     {
-        return $this->belongsToMany(Group::class, 'group_stock_pivot');
+        return $this->belongsToMany(Stock::class, 'group_stock_pivot');
     }
 }
