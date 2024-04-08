@@ -17,7 +17,7 @@ return new class extends Migration
             $table->float('price');
             $table->float('beta');
             $table->float('EPS');
-            $table->float('price_to_earnings');
+            $table->string('price_to_earnings')->nullable();
             $table->float('dividend_yield')->nullable();
             $table->string('dividend_date')->nullable();
             $table->float('dividend_per_share')->nullable();

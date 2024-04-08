@@ -11,7 +11,7 @@ const combineAPIData = (price, details) => {
         price: parseFloat(stockPrice).toFixed(2),
         beta: parseFloat(stockDetails.Beta).toFixed(3),
         EPS: parseFloat(stockDetails.EPS).toFixed(3),
-        price_to_earnings: parseFloat(stockDetails.PERatio).toFixed(3),
+        price_to_earnings: stockDetails.PERatio,
         dividend_yield: stockDetails.DividendYield,
         dividend_date: stockDetails.DividendDate,
         dividend_per_share: stockDetails.DividendPerShare,
