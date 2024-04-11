@@ -13,7 +13,7 @@ use function Laravel\Prompts\error;
 class GroupController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of all Groups belonging to the authenticated user
      */
     public function index()
     {
@@ -24,7 +24,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Group
      */
     public function create()
     {
@@ -53,7 +53,7 @@ class GroupController extends Controller
     }
 
 /**
-     * Store a newly created resource in storage.
+     * Store a newly created Group in storage.
      */
     public function store(Request $request)
     {
@@ -76,7 +76,7 @@ class GroupController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Group.
      */
     public function show($groupId)
     {
@@ -89,16 +89,17 @@ class GroupController extends Controller
                'stocks' => $stocks,
             ]);
         } else {
-            return Redirect::back()->with('error', 'Error: Failed to group or associated stocks belonging to the group you selected.');
+            return Redirect::back()->with('error', 'Error: Failed to find group or associated stocks belonging to the group you selected.');
         }
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified Group.
      */
-    public function edit(Group $group)
+    public function edit($groupId)
     {
-        //
+        $group = auth()->user()->group()->findOrFail($groupId);
+
     }
 
     /**
