@@ -6,17 +6,19 @@ import Loading from "@/Components/Loading.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 
 const DetailedStockData = memo(function DetailedStockData({ symbol, price }) {
-    //console.log(symbol);
+    //API Data
+    const APIKey = import.meta.env.VITE_ALPHAVANTAGE_API_KEY;
+    const APIHost = import.meta.env.VITE_ALPHAVANTAGE_API_HOST;
+
     //Variables needed to manage state
     const [details, setDetails] = useState({});
     const [isVisible, setIsVisible] = useState(false);
     const [isMessageVisible, setIsMessageVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
     //Message variables for letting the user know if their stock was saved
     const [errorMessage, setErrorMessage] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
-    const APIKey =  '577a69f858msh40fe029fdfb0c7bp1d982cjsna5b05d487d92';
-    const APIHost = 'alpha-vantage.p.rapidapi.com'
 
     useEffect(() => {
         if (symbol) {

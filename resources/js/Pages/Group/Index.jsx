@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
-import {Head, Link, router} from "@inertiajs/react";
+import {Head, Link} from "@inertiajs/react";
 
 const openGroup = (groupId) => {
     return route('group.show', ['groupId', groupId])
