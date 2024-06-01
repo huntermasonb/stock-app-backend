@@ -1,15 +1,20 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import {Head, useForm} from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel.jsx";
-import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
-import {useState} from "react";
+import TextInput from "@/Components/TextInput.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 
 
 export default function create({auth, stocks}){
-    // Inertia variables to assist with form processing
-    const { data, setData, post, processing, errors, reset } = useForm({
+    // Inertia variables to assist with form processing, useForm are the main
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        errors, reset
+    } = useForm({
         name: '',
         selectedStocks: [],
     });
@@ -21,7 +26,7 @@ export default function create({auth, stocks}){
             ...data
         });
     };
-
+    //If a stock exists with an id in the selectedStocks list remove it, or add the new stock to the already existing list of selected stocks
     function toggleStockSelection(selectedStocks, stockId) {
         if (selectedStocks.includes(stockId)) {
             return selectedStocks.filter(id => id !== stockId);
@@ -50,8 +55,9 @@ export default function create({auth, stocks}){
                     <InputError message={errors.name} className="mt-2" />
 
                     <div className="flex flex-col p-2">
-                        {console.log(data.selectedStocks)}
+{/*                     {console.log(data.selectedStocks)}
                         {console.log(data.name)}
+*/}
                         {stocks && stocks.map((stock, index) => (
                             <label className="px-4" key={index} htmlFor={stock.name}>
                                 <input name={stock.name} type="checkbox" onChange={() => setData('selectedStocks', toggleStockSelection(data.selectedStocks, stock.id))} value={stock.id}/>

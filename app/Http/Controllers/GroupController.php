@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use mysql_xdevapi\Exception;
-use function Laravel\Prompts\error;
+
 
 class GroupController extends Controller
 {
@@ -63,8 +62,10 @@ class GroupController extends Controller
             return Redirect()->back()->with('error', 'Error: Invalid Data');
         } else {
             try {
+                //Create a new group with the validated stock information from the user
                 $data = new Group($validatedData);
 
+                //Authorize the user and save the new group attached with the validated selected stocks from the user
                 auth()->user()->group()->save($data);
                 $data->stocks()->withTimestamps()->attach($validatedData['selectedStocks']);
                 return to_route('group.index')->with('success', 'Group Successfully created.');
@@ -80,13 +81,29 @@ class GroupController extends Controller
      */
     public function show($groupId)
     {
-        $group = auth()->user()->group()->findOrFail($groupId);
-        $stocks = $group->stocks;
+        $user = auth()->user();
+        $userStocks = $user->stocks;
 
-        if ($group && $stocks->isNotEmpty()){
+        //Tried making the call to stocks in one line, but it fails to pass the stock data to the group
+
+        $group = $user->group()->findOrFail($groupId);
+        $groupStocks = $group->stocks;
+
+        /*
+            Check to see which stocks exist within the groupStocks variable and filter them.
+            This is to show the user which stocks are currently permitted to be added
+        */
+        $userStockIds = $userStocks->pluck('id')->toArray();
+        $groupStockIds = $groupStocks->pluck('id')->toArray();
+
+        //Need a way to filter which userStocks arent in groupStocks and only add those to stocks. I believe they are objects
+        $userOnlyStockIds = array_diff($userStockIds, $groupStockIds);
+        $userStocks = $userStocks->whereIn('id', $userOnlyStockIds);
+
+        if ($group && $userStocks->isNotEmpty() && $groupStocks->isNotEmpty()){
             return Inertia::render('Group/Show', [
-               'group' => $group,
-               'stocks' => $stocks,
+                'group' => $group,
+                'userStocks' => $userStocks->values()->all(),
             ]);
         } else {
             return Redirect::back()->with('error', 'Error: Failed to find group or associated stocks belonging to the group you selected.');
@@ -98,7 +115,6 @@ class GroupController extends Controller
      */
     public function edit($groupId)
     {
-        $group = auth()->user()->group()->findOrFail($groupId);
 
     }
 

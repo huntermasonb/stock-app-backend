@@ -1,13 +1,14 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import {Head, Link} from "@inertiajs/react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import DeleteClosedIcon from "@/Components/DeleteClosedIcon.jsx";
 import DeleteOpenIcon from "@/Components/DeleteOpenIcon.jsx";
+import Edit from "@/Pages/Group/Edit.jsx";
 
 /*It might be a better idea to remove this file and the route for it. Then re-create this in a modal to be displayed on the index page to reduce amount of redirects*/
 
-export default function show({auth, group, stocks}) {
-    const [isHovering, setIsHovering] = useState(null);
+export default function show({auth, group, userStocks}) {
+    const [isHovering, setIsHovering] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
     const formatDate = (dateTime) => {
@@ -25,7 +26,7 @@ export default function show({auth, group, stocks}) {
                     </div>
                     {/*Should consider creating a new component used to display stock data in multiple places throughout the application*/}
                     <div className="p-4 flex flex-col md:flex-row items-center justify-evenly max-w-full flex-wrap">
-                        {stocks.map((stock, index) =>(
+                        {group.stocks.map((stock, index) =>(
                             <div key={index} className="flex flex-col justify-start items-start text-wrap overflow-clip rounded-md bg-lavender-200 p-6 m-2 max-w-52">
                                 <p>{stock.name}</p>
                                 <p>{stock.symbol}</p>
@@ -35,10 +36,10 @@ export default function show({auth, group, stocks}) {
                         ))}
                     </div>
                     {/*Delete and Edit Buttons*/}
-                    <div className="flex flex-col lg:flex-row">
+                    <div className="flex flex-col">
                         <div className="mx-4 p-2 flex justify-around">
                             <Link as="button" type="button" method="delete" href={route('group.destroy', group.id)}
-                                  onMouseLeave={() => setIsHovering(null)}
+                                  onMouseLeave={() => setIsHovering(false)}
                                   onMouseEnter={() => setIsHovering(true)}
                             >
                                 {!isHovering ? <DeleteClosedIcon fill={"#B31E1E"} className="scale-150" /> : <DeleteOpenIcon fill={"#B31E1E"} className="scale-150" />}
@@ -49,7 +50,7 @@ export default function show({auth, group, stocks}) {
                         </div>
                     </div>
                     {/* Edit group form if the edit button was clicked. TO DO: Make edit component to display if isClicked is true which will take the groupId as a parameter to display a modal to make changes to the group with*/}
-                    {isClicked  }
+                    {isClicked && <Edit group={group} userStocks={userStocks} isClicked={isClicked} setIsClicked={setIsClicked} /> }
                 </div>
             </div>
         </AuthenticatedLayout>

@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/groups', [GroupController::class, 'index'])->name('group.index');
     Route::get('/groups/create', [GroupController::class, 'create'])->name('group.create');
     Route::post('/groups/store', [GroupController::class, 'store'])->name('group.store');
-    Route::post('/groups/edit/{group_id}', [GroupController::class, 'update'])->name('group.update');
+    Route::patch('/groups/edit/{group_id}', [GroupController::class, 'update'])->name('group.update');
     Route::delete('/groups/destroy/{group_id}', [GroupController::class, 'destroy'])->name('group.destroy');
     Route::get('/groups/{group_id}', [GroupController::class, 'show'])->name('group.show');
 });
