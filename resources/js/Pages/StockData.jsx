@@ -70,7 +70,8 @@ const StockData = ({ symbol, prices }) => {
                         </div>
                     </div>
                     {/* Below is very messy and should be reworked. I have nested ternaries to set classes, could potentially clean this up by using clsx
-                        Display the detailed stock data component when below is clicked.
+
+                        Display the detailed stock data via the component when button below is clicked.
                     */}
                     <div className="flex flex-col justify-center">
                         <button className={`${isButtonHidden(symbols === "price" ? symbol : symbols) ? "hidden" : ""} transition-all duration-150 ease-in-out`}

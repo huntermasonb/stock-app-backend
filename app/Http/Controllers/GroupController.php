@@ -85,22 +85,21 @@ class GroupController extends Controller
         $userStocks = $user->stocks;
 
         //Tried making the call to stocks in one line, but it fails to pass the stock data to the group
-
         $group = $user->group()->findOrFail($groupId);
         $groupStocks = $group->stocks;
 
         /*
-            Check to see which stocks exist within the groupStocks variable and filter them.
-            This is to show the user which stocks are currently permitted to be added
+        Check to see which stocks exist within the groupStocks variable and filter them.
+        This is to show the user which stocks have not been added to the group (are available to be added)
         */
         $userStockIds = $userStocks->pluck('id')->toArray();
         $groupStockIds = $groupStocks->pluck('id')->toArray();
 
-        //Need a way to filter which userStocks arent in groupStocks and only add those to stocks. I believe they are objects
+        //Use array diff to find only stocks that have not been added to the specific group
         $userOnlyStockIds = array_diff($userStockIds, $groupStockIds);
         $userStocks = $userStocks->whereIn('id', $userOnlyStockIds);
 
-        if ($group && $userStocks->isNotEmpty() && $groupStocks->isNotEmpty()){
+        if ($group && $userStockIds && $groupStocks->isNotEmpty()){
             return Inertia::render('Group/Show', [
                 'group' => $group,
                 'userStocks' => $userStocks->values()->all(),
