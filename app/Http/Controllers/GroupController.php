@@ -70,7 +70,7 @@ class GroupController extends Controller
                 $data->stocks()->withTimestamps()->attach($validatedData['selectedStocks']);
                 return to_route('group.index')->with('success', 'Group Successfully created.');
             } catch (\Exception $err){
-                Log::error('Error: Group failed to be created', ['error' => $err->getMessage()]);
+                Log::error('Error: Group failed to be created\n', ['error' => $err->getMessage()]);
                 return Redirect::back()->with('error', 'Error: Group failed to be created, please try again');
             }
         }
@@ -86,6 +86,7 @@ class GroupController extends Controller
 
         //Tried making the call to stocks in one line, but it fails to pass the stock data to the group
         $group = $user->group()->findOrFail($groupId);
+        $groupName = $group->name;
         $groupStocks = $group->stocks;
 
         /*
@@ -95,14 +96,18 @@ class GroupController extends Controller
         $userStockIds = $userStocks->pluck('id')->toArray();
         $groupStockIds = $groupStocks->pluck('id')->toArray();
 
-        //Use array diff to find only stocks that have not been added to the specific group
+        //Use array diff to find only stocks that have not been added to the specific group & pass only needed information to the view
         $userOnlyStockIds = array_diff($userStockIds, $groupStockIds);
+
         $userStocks = $userStocks->whereIn('id', $userOnlyStockIds);
+        $groupStocks = $groupStocks->whereIn('id', $groupStockIds);
 
         if ($group && $userStockIds && $groupStocks->isNotEmpty()){
             return Inertia::render('Group/Show', [
-                'group' => $group,
+                'groupName' => $groupName,
+                'groupId' => $group->id,
                 'userStocks' => $userStocks->values()->all(),
+                'groupStocks' => $groupStocks->values()->all(),
             ]);
         } else {
             return Redirect::back()->with('error', 'Error: Failed to find group or associated stocks belonging to the group you selected.');
@@ -132,14 +137,14 @@ class GroupController extends Controller
     {
         $group = auth()->user()->group()->findOrFail($groupId);
         if (!$group || !$group->exists() || !auth()->check()){
-            Log::error('Error: Failed to delete a stock');
+            Log::error('Error: Failed to delete a group that does not exist or user was not authenticated. Group' . $group['name'] . ' with ');
             return Redirect::back()->with('error', 'Error: Group failed to be deleted because the group did not exist, or your session timed out.');
         } else {
             try {
                 $group->delete();
-                return to_route('group.index')->with('success', 'Group ' . $group['name'] . 'was succesfully deleted.');
+                return to_route('group.index')->with('success', 'Group ' . $group['name'] . ' was succesfully deleted.');
             } catch (\Exception $err){
-                Log::error('Error: Group' . $group['id'] . 'failed to be deleted', ['error' => $err->getMessage()]);
+                Log::error('Error: Group' . $group['id'] . ' failed to be deleted', ['error' => $err->getMessage()]);
                 return Redirect::back()->with('error', 'Error: Group failed to be deleted, please try again momentarily');
             }
         }

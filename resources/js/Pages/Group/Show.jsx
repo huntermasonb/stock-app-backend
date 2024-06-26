@@ -7,7 +7,7 @@ import Edit from "@/Pages/Group/Edit.jsx";
 
 /*It might be a better idea to remove this file and the route for it. Then re-create this in a modal to be displayed on the index page to reduce amount of redirects*/
 
-export default function show({auth, group, userStocks}) {
+export default function show({auth, groupName, groupStocks, groupId, userStocks}) {
     const [isHovering, setIsHovering] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
@@ -17,16 +17,16 @@ export default function show({auth, group, userStocks}) {
 
     return (
         <AuthenticatedLayout user={auth.user} >
-            <Head title={group.name} />
+            <Head title={groupName} />
 
             <div className="p-4 md:p-8">
                 <div className="flex flex-col bg-indigo-600 dark:bg-indigo-400 rounded-md">
                     <div className="flex flex-row pt-2 justify-center">
-                        <h3 className="text-3xl text-indigo-50 font-semibold transform translate-x-1.5 ease-in-out">{group.name}</h3>
+                        <h3 className="text-3xl text-indigo-50 font-semibold transform translate-x-1.5 ease-in-out">{groupName}</h3>
                     </div>
                     {/*Should consider creating a new component used to display stock data in multiple places throughout the application*/}
                     <div className="p-4 flex flex-col md:flex-row items-center justify-evenly max-w-full flex-wrap">
-                        {group.stocks.map((stock, index) =>(
+                        {groupStocks.map((stock, index) =>(
                             <div key={index} className="flex flex-col justify-start items-start text-wrap overflow-clip rounded-md bg-lavender-200 p-6 m-2 max-w-52">
                                 <p>{stock.name}</p>
                                 <p>{stock.symbol}</p>
@@ -38,7 +38,7 @@ export default function show({auth, group, userStocks}) {
                     {/*Delete and Edit Buttons*/}
                     <div className="flex flex-col">
                         <div className="mx-4 p-2 flex justify-around">
-                            <Link as="button" type="button" method="delete" href={route('group.destroy', group.id)}
+                            <Link as="button" type="button" method="delete" href={route('group.destroy', groupId)}
                                   onMouseLeave={() => setIsHovering(false)}
                                   onMouseEnter={() => setIsHovering(true)}
                             >
@@ -50,7 +50,7 @@ export default function show({auth, group, userStocks}) {
                         </div>
                     </div>
                     {/* Edit group form if the edit button was clicked. TO DO: Make edit component to display if isClicked is true which will take the groupId as a parameter to display a modal to make changes to the group with*/}
-                    {isClicked && <Edit group={group} userStocks={userStocks} isClicked={isClicked} setIsClicked={setIsClicked} /> }
+                    {isClicked && <Edit groupName={groupName} groupStocks={groupStocks} userStocks={userStocks} isClicked={isClicked} setIsClicked={setIsClicked} /> }
                 </div>
             </div>
         </AuthenticatedLayout>
