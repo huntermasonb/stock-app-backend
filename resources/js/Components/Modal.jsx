@@ -8,6 +8,7 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
         }
     };
 
+    // Didn't like this custom class, so I replaced it with traditional tailwind.
     const maxWidthClass = {
         sm: 'sm:max-w-sm',
         md: 'sm:max-w-md',
@@ -46,7 +47,7 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
                     leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
                     <Dialog.Panel
-                        className={`mb-6 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto ${maxWidthClass} ` + className}
+                        className={`mb-6 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto max-w-6xl ` + className}
                     >
                         {children}
                     </Dialog.Panel>

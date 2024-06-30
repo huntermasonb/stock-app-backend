@@ -50,7 +50,7 @@ export default function show({auth, groupName, groupStocks, groupId, userStocks}
                         </div>
                     </div>
                     {/* Edit group form if the edit button was clicked. TO DO: Make edit component to display if isClicked is true which will take the groupId as a parameter to display a modal to make changes to the group with*/}
-                    {isClicked && <Edit groupName={groupName} groupStocks={groupStocks} userStocks={userStocks} isClicked={isClicked} setIsClicked={setIsClicked} /> }
+                    {isClicked && <Edit groupName={groupName} initialGroupStocks={groupStocks} initialUserStocks={userStocks} isClicked={isClicked} setIsClicked={setIsClicked} /> }
                 </div>
             </div>
         </AuthenticatedLayout>

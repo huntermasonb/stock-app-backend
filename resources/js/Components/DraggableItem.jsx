@@ -17,8 +17,10 @@ export function DraggableItem({name, className = '', ...props }){
         listeners,
         transform,
         transition,
-        isDragging
-    } = useSortable({id: name});
+    } = useSortable({
+        id: name,
+        type: 'Stock',
+    });
 
     // Special style that needs to be written in CSS for DND kit to show the items moving
     const style = {
@@ -26,7 +28,7 @@ export function DraggableItem({name, className = '', ...props }){
         transition,
     };
 
-    let elementClassName = 'm-1 p-2 border border-indigo-300 bg-indigo-500 rounded-md' + className;
+    let elementClassName = 'm-1 p-2 border border-indigo-300 bg-indigo-500 rounded-md ' + className;
 
     return (
         <Element ref={setNodeRef} style={style} className={elementClassName} {...listeners} {...attributes} {...props}>

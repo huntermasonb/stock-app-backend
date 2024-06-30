@@ -1,4 +1,4 @@
-import * as React from "react";
+// An SVG trash can with the lid off. Meant to use with `<DeleteClosedIcon />`. Use `fill={"#ffffff"}` to control primary color. Accepts `class/className`, `style`, `width`, `height`, and `stroke`
 const SVGComponent = (props) => (
     <svg
         fill="#b3b2d7"
