@@ -1,4 +1,4 @@
-import {useSortable} from "@dnd-kit/sortable";
+import { useSortable,  } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities"
 import {forwardRef} from 'react';
 
@@ -8,7 +8,7 @@ import {forwardRef} from 'react';
 
     Additionally, this component can be attached to listeners which will
 */
-export function DraggableItem({name, className = '', ...props }){
+export default function DraggableItem({name, className = '', ...props }){
     const Element = props.element ? props.element : 'div';
 
     const {
@@ -19,20 +19,19 @@ export function DraggableItem({name, className = '', ...props }){
         transition,
     } = useSortable({
         id: name,
-        type: 'Stock',
     });
 
     // Special style that needs to be written in CSS for DND kit to show the items moving
     const style = {
-        transform: CSS.Transform.toString(transform),
+        transform,
         transition,
     };
 
-    let elementClassName = 'm-1 p-2 border border-indigo-300 bg-indigo-500 rounded-md ' + className;
+    let elementClassName = 'm-2 p-2 bg-indigo-500 rounded-md ' + className;
 
     return (
         <Element ref={setNodeRef} style={style} className={elementClassName} {...listeners} {...attributes} {...props}>
-            <Item className={'text-lavender-100 translate'} name={name} />
+            <Item className={'text-lavender-100'} name={name} />
         </Element>
     )
 }

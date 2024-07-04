@@ -1,23 +1,22 @@
 import { useState } from "react";
 import {Head, useForm} from "@inertiajs/react";
+import {createPortal} from 'react-dom'
 import Modal from "@/Components/Modal.jsx";
-import { DroppableArea } from "@/Components/DroppableArea.jsx";
-import { DraggableItem, Item} from "@/Components/DraggableItem.jsx";
+import DroppableArea from "@/Components/DroppableArea.jsx";
+import DraggableItem  from "@/Components/DraggableItem.jsx";
+import {sortableKeyboardCoordinates, verticalListSortingStrategy} from "@dnd-kit/sortable";
+import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import {
     closestCenter,
-    closestCorners, defaultCoordinates,
+    closestCorners,
     DndContext,
     DragOverlay,
     KeyboardSensor,
     PointerSensor,
     TouchSensor,
     useSensor,
-    useSensors
+    useSensors,
 } from "@dnd-kit/core";
-import {sortableKeyboardCoordinates, verticalListSortingStrategy} from "@dnd-kit/sortable";
-import {
-    snapCenterToCursor
-} from "@dnd-kit/modifiers";
 
 // NEED TO MOVE THE EDIT BUTTON INTO THIS COMPONENT TO MAKE IT EASIER TO MANAGE THE STATE OF THE MODAL COMPONENT
 
@@ -121,33 +120,33 @@ export default function Edit({groupName, initialGroupStocks ,initialUserStocks, 
                 </div>
                 <h2 className="flex justify-center p-2 ml-6 text-4xl font-bold">{groupName}</h2>
                 <div className="flex flex-row p-2 ">
-                    <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} collisionDetection={closestCenter} sensors={sensors}>
+                    <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} collisionDetection={closestCorners} sensors={sensors}>
                         {/* Group Stocks which have already been added to the current group. should be Droppable */}
-                        <DroppableArea name={`group-stock-area`} id={`group-stocks-area`} items={groupStocks} strategy={verticalListSortingStrategy} className="flex flex-col w-[45%]">
-                            <h3 className="p-2 text-3xl font-medium">Current Stocks</h3>
+                        <DroppableArea name={`group-stock-area`} id={`group-stocks-area`} items={groupStocks} strategy={verticalListSortingStrategy} className="flex flex-col w-1/2 mr-8 shadow">
+                            <h3 className="p-2 text-4xl font-bold drop-shadow">Grouped Stocks</h3>
                             {console.log(groupStocks)}
-                            {/* Should be draggable */}
-                            {groupStocks.map((stock, index) => (
-                                <DraggableItem name={stock.name} key={index}  id={stock.name} />
+                            {/* Render draggable stocks based on groupStocks data */}
+                            {groupStocks && groupStocks.map((stock, index) => (
+                                <DraggableItem name={stock.name} key={index} id={stock.name} className={'shadow shadow-indigo-900'} />
                             ))}
                         </DroppableArea>
-                        <div className="flex flex-col w-[10%] justify-center align-middle">
-                            <button className="scale-150 ">&larr;</button>
-                            <button className="scale-150">&rarr;</button>
-                        </div>
                         {/* User bookmarked stocks which have not been added to the current group. should be Droppable*/}
-                        <DroppableArea name={'user-stocks-area'} id={'user-stocks-area'} items={userStocks} strategy={verticalListSortingStrategy} className="flex flex-col w-[45%]">
-                            <h3 className="p-2 text-3xl font-medium text-end">Available Stocks</h3>
-                            {/* Should be draggable */}
+                        <DroppableArea name={'user-stocks-area'} id={'user-stocks-area'} items={userStocks} strategy={verticalListSortingStrategy} className="flex flex-col w-1/2 ml-8 shadow">
+                            <h3 className="p-2 text-4xl font-bold drop-shadow text-end">Available Stocks</h3>
+                            {/* Render draggable stock items based on the userStocks data*/}
                             {console.log(userStocks)}
-                            {userStocks.map((stock, index) => (
-                                <DraggableItem name={stock.name} key={index} id={stock.name} />
+                            {userStocks && userStocks.map((stock, index) => (
+                                <DraggableItem name={stock.name} key={index} id={stock.name} className={'shadow shadow-indigo-900'} />
                             ))}
                         </DroppableArea>
 
-                        <DragOverlay >{/*modifiers={[snapCenterToCursor]}*/}
-                            {activeId ? <DraggableItem id={activeId} /> : null}
-                        </DragOverlay>
+                        {/* Create portal to help adjust to the Modal components viewport and display a seperate component of the stock which is being dragged*/}
+                        {createPortal(
+                            <DragOverlay modifiers={[restrictToWindowEdges]} >
+                                {activeId ? <DraggableItem id={activeId} name={activeId} className={'bg-indigo-700 ring-4 ring-indigo-600 shadow-md shadow-indigo-900 transition-shadow ease-in-out'}/> : null}
+                            </DragOverlay>,
+                            document.body,
+                        )}
                     </DndContext>
                 </div>
             </Modal>
