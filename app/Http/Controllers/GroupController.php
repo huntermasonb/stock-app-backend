@@ -3,14 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Services\StockServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
-
 class GroupController extends Controller
 {
+    /**
+     * Constructor to reference validateStockData to verify the data is in the same format as being "boookmarked" initially
+     */
+    private StockServices $stockServices;
+    public function __construct(StockServices $stockServices){
+        $this->stockServices = $stockServices;
+    }
     /**
      * Display a listing of all Groups belonging to the authenticated user
      */
@@ -29,7 +36,7 @@ class GroupController extends Controller
     {
         $user = auth()->user();
         $stocks = $user->stocks;
-        if ($user){
+        if ($user && $stocks){
             return Inertia::render('Group/Create', [
                 'user' => $user,
                 'stocks' => $stocks,
@@ -40,9 +47,9 @@ class GroupController extends Controller
     }
 
     /**
-     * Set attributes for 'Group' database entry
+     * Set attributes for Group database entry
      * */
-    public function validateData(Request $request): array
+    public function validateGroupData(Request $request): array
     {
         return $request->validate([
             'name' => 'required|string|max:50',
@@ -56,21 +63,22 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        $selectedStocks = $request->input('selectedStocks');
-        $validatedData = $this->validateData($request);
-        if (!$validatedData){
-            return Redirect()->back()->with('error', 'Error: Invalid Data');
+        $user = auth()->user();
+
+        $validatedData = $this->validateGroupData($request);
+        if (!$validatedData || !$user){
+            return Redirect()->back()->with('error', 'Error: Invalid Data or User');
         } else {
             try {
                 //Create a new group with the validated stock information from the user
-                $data = new Group($validatedData);
+                $group = new Group($validatedData);
 
                 //Authorize the user and save the new group attached with the validated selected stocks from the user
-                auth()->user()->group()->save($data);
-                $data->stocks()->withTimestamps()->attach($validatedData['selectedStocks']);
+                auth()->user()->group()->save($group);
+                $group->stocks()->withTimestamps()->attach($validatedData['selectedStocks']);
                 return to_route('group.index')->with('success', 'Group Successfully created.');
             } catch (\Exception $err){
-                Log::error('Error: Group failed to be created\n', ['error' => $err->getMessage()]);
+                Log::error("Error: Group failed to be created\n", ['error' => $err->getMessage()]);
                 return Redirect::back()->with('error', 'Error: Group failed to be created, please try again');
             }
         }
@@ -110,7 +118,7 @@ class GroupController extends Controller
                 'groupStocks' => $groupStocks->values()->all(),
             ]);
         } else {
-            return Redirect::back()->with('error', 'Error: Failed to find group or associated stocks belonging to the group you selected.');
+            return Redirect::back()->with('error', 'Error: Failed to find group or associated stocks belonging to the group selected.');
         }
     }
 
@@ -125,9 +133,46 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Group $group)
+    public function update(Request $request, $groupId)
     {
-        //
+        //        $selectedStocks = $request->input('selectedStocks');
+        $validatedGroup = $this->validateGroupData($request->only(['name', 'selectedStocks']));
+
+        $groupStocks = $validatedGroup['selectedStocks'];
+        $groupName = $validatedGroup['name'];
+        $groupStocksData = $request->input('selectedStocksData')->toArray();
+
+        //Group ID is a numeric so return to avoid injection
+        if (!is_numeric($groupId)){
+            Log::error("Error: Group id must be numeric");
+            return Redirect::back()->with('error', 'Error: Group id must be numeric');
+        }
+        // Query for the group ID associated with user groups or fail
+        $user = auth()->user();
+        $group = $user->group()->findOrFail($groupId);
+
+        //Check if group is valid and user is authenticated before continuing.
+        if (!$group || !$group->exists() || !auth()->check() || !$groupStocks){
+            Log::error("Error: Failed to Update group because it does not exist, or user was not authenticated.\n Group Name: " . $group->name . " User Name: " . $user->getAuthIdentifierName());
+            return Redirect::back()->with('error', 'Error: Failed to Update group because it does not exist or your session expired, please try logging in again.');
+        } else {
+            try{
+                //Validate Stock data before writing anything to database
+                $validatedStocks = $this->stockServices->validateStockData($groupStocksData);
+
+                if (!$validatedStocks){
+                    Log::error("Error: Failed to update Group due to invalid stock data\n Group Name: " . $group->name . " User Name: " . $user->getAuthIdentifierName() . "\n Stock Data: " . json_encode($validatedStocks));
+                    return Redirect::back()->with('error', 'Error: Failed to update Group due to non-valid group or stock data');
+                } else {
+                    //Update group with new stocks by Name and Id
+                    $group->where('name',$groupName)->where('id',$groupId)->update($validatedStocks);                }
+                    return to_route('group.index')->with('success', 'Group successfully updated.');
+            }catch (\Exception $err){
+                //Log any errors
+                Log::error("Error: Group $groupName failed to be updated\n", ['error' => $err->getMessage()]);
+                return Redirect::back()->with('error', 'Error: Failed to update group, please try again');
+            }
+        }
     }
 
     /**
@@ -137,7 +182,7 @@ class GroupController extends Controller
     {
         $group = auth()->user()->group()->findOrFail($groupId);
         if (!$group || !$group->exists() || !auth()->check()){
-            Log::error('Error: Failed to delete a group that does not exist or user was not authenticated. Group' . $group['name'] . ' with ');
+            Log::error("Error: Failed to delete a group that does not exist or user was not authenticated.\n Group Name: " . $group->name);
             return Redirect::back()->with('error', 'Error: Group failed to be deleted because the group did not exist, or your session timed out.');
         } else {
             try {

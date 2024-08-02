@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
 });
 
 //Routes for Group Model
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/groups', [GroupController::class, 'index'])->name('group.index');
     Route::get('/groups/create', [GroupController::class, 'create'])->name('group.create');
     Route::post('/groups/store', [GroupController::class, 'store'])->name('group.store');

@@ -1,10 +1,10 @@
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 
 /*
-Re-usable `<SortableContext />` component with a customizable `Element` wrapper with custom classes. `<SortableContext />` supports `id={}` which is required,
-`name={}`, `className={}`, `items={}` for items to be listed, `strategy={}` for sorting strategy, and other `children={}`.
+Re-usable `<SortableContext />` component with a fully customizable `Element` wrapper supporting `className={}` for tailwind styling.
+`<SortableContext />` supports `id={}` which is required,`name={}`, `items={}` for items to be listed, `strategy={}` for sorting strategy, and other `children={}`.
 */
-export default function DroppableArea({name= '', id = '', className = '', ...props }) {
+export default function DroppableArea({name= '', id, className = '', ...props }) {
     const Element = props.element ? props.element : 'div';
     //console.log(props)
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\StockServices;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Inertia\Inertia;
@@ -9,8 +10,18 @@ use Inertia\Response;
 use App\Models\Stock;
 use function Laravel\Prompts\error;
 
+//TO DO: REVAMP THIS CONTROLLER TO STORE STOCKS ITSELF, AND ACTUALLY HAVE VALIDATION. I WAS A NOOB.
+
 class StockController extends Controller
 {
+    /**
+     * Build constructor for StockServices to reference validateStockData function
+     */
+    private StockServices $stockServices;
+    public function __construct(StockServices $stockServices){
+        $this->stockServices = $stockServices;
+    }
+
     /**
      * Display all stocks saved by the user
      */
@@ -33,35 +44,13 @@ class StockController extends Controller
     }
 
     /**
-     * Set parameters for stock entry in the database
-     */
-    public function validateStockData(Request $request): array
-    {
-        return $request->validate([
-            'name' => 'required|string',
-            'symbol' => 'required|string',
-            'price' => 'required|numeric',
-            'beta' => 'required|numeric',
-            'EPS' => 'required|numeric',
-            'price_to_earnings' => 'nullable|string',
-            'dividend_yield' => 'nullable|string',
-            'dividend_date' => 'nullable|string',
-            'dividend_per_share' => 'nullable|string',
-            'rating_strong_buy' => 'nullable|numeric',
-            'rating_buy' => 'nullable|numeric',
-            'rating_hold' => 'nullable|numeric',
-            'rating_sell' => 'nullable|numeric',
-            'rating_strong_sell' => 'nullable|numeric',
-        ]);
-    }
-
-    /**
      * Store a newly created stock and fire the create method to save the entry
      */
+    // TODO: correct the returns in this file to actually take users back to the correct page.
     public function store(Request $request) : \Illuminate\Http\JsonResponse
     {
         //Store the data from React components for future use.
-        $validatedData = $this->validateStockData($request);
+        $validatedData = $this->stockServices->validateStockData($request);
         $combinedData = $validatedData;
 
         //Check to see if the stock exists, user is logged in, and trigger the Update method if so
